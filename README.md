@@ -1,7 +1,7 @@
 # ARTIC
 ARTIC -- мобильное приложение для знакомства с экспонатами Чикагского института исскуств (The Art Institute of Chicago, USA).
 
-# Описание
+## Описание
 Приложение обеспечивает
 •	иллюстрированный реестр экспонатов и выставок;
 •	удобный поиск по названиям, и текстам каталогов музея;
@@ -9,9 +9,8 @@ ARTIC -- мобильное приложение для знакомства с 
 •	покупку и хранение билетов для посещения многочисленных выставок;
 •	помощь в регистрации в Google календаре напоминания о времени работы выставки.
 
-# Стек технологий
+## Стек технологий
 Информационная составляющая приложения всецело базируется на обширном информационном ресурсе музея Artic API. Архитектура приложения соответствует принципам MVVM.
--	Версия Android SDK 2.
 -	Написано на Kotlin.
 -	Koin для DI.
 -	Библиотеки семейства JetPack:
@@ -21,6 +20,39 @@ ARTIC -- мобильное приложение для знакомства с 
     -	Navigation Component
 -	Retrofit для работы с сетью
 -	Zxing для работы с QR-кодами
+
+# Скриншоты приложения
+
+## Экраны экспонатов
+<p float="center">
+    <img alt="Aboa" src="screenshots/Main Screen List_result.jpg" width="360" height="640" />
+    <img src="screenshots/Main Screen Detail_result.jpg" width="360" height="640" />
+</p>
+
+## Экран выставок
+<p float="center">
+    <img src="screenshots/Exhibitions Screen Detail_result.jpg" width="360" height="640" />
+    <img alt="Aboa" src="screenshots/Exhibitions Screen Detail_result.jpg" width="360" height="640" />
+</p>
+
+## Экраны билетов
+<p float="center">
+    <img alt="Aboa" src="screenshots/Ticket Screen List_result.jpg" width="360" height="640" />
+    <img src="screenshots/Ticket Screen Detail_result.jpg" width="360" height="640" />
+</p>
+
+## Экран сканера QR-кода
+<p float="center">
+    <img alt="Aboa" src="screenshots/Qr Code Scanner Screen Default_result.jpg" width="360" height="640" />
+</p>
+
+## Экран поиск аудио
+<p float="center">
+    <img alt="Aboa" src="screenshots/Audio Lookup Screen Error Empty_result.jpg" width="360" height="640" />
+    <img src="screenshots/Audio Lookup Screen Error Not Found_result.jpg" width="360" height="640" />
+    <img src="screenshots/Audio Lookup Screen_result.jpg" width="360" height="640" />
+    <img src="screenshots/Audio Player With Transcript_result.jpg" width="360" height="640" />
+</p>
 
 # Лицензия
 Designed and developed by 2023Constanta (Tamerlan Mamukhov)
