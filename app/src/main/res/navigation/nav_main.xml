@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/artworksListFragment">
+
+    <dialog
+        android:id="@+id/filterArtworksBottomSheetDialog"
+        android:name="com.nightstalker.artic.features.artwork.presentation.ui.dialog.FilterArtworksBottomSheetDialog"
+        android:label="fragment_filter_artworks_bottom_sheet_dialog"
+        tools:layout="@layout/fragment_filter_artworks_bottom_sheet_dialog">
+        <action
+            android:id="@+id/action_filterArtworksBottomSheetDialog_to_artworksListFragment"
+            app:destination="@id/artworksListFragment" />
+    </dialog>
+    <fragment
+        android:id="@+id/artworkDetailsFragment"
+        android:name="com.nightstalker.artic.features.artwork.presentation.ui.detail.ArtworkDetailsFragment"
+        android:label="@string/label_frag_art_det"
+        tools:layout="@layout/fragment_artwork_details">
+        <argument
+            android:name="poster_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_artworkDetailsFragment_to_audioPlayerBottomSheetDialog"
+            app:destination="@id/audioPlayerBottomSheetDialog" />
+        <action
+            android:id="@+id/action_artworkDetailsFragment_to_artworkFullViewFragment"
+            app:destination="@id/artworkFullViewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/qrScanner"
+        android:name="com.nightstalker.artic.features.qrcode.QRScannerFragment"
+        android:label="@string/label_frag_scanner"
+        tools:layout="@layout/fragment_qrscanner">
+
+    </fragment>
+    <fragment
+        android:id="@+id/ticketsListFragment"
+        android:name="com.nightstalker.artic.features.ticket.presentation.ui.list.TicketsListFragment"
+        android:label="@string/label_frag_ticket_list"
+        tools:layout="@layout/fragment_tickets_list">
+        <action
+            android:id="@+id/toTicketDetailsFragment"
+            app:destination="@id/ticketDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ticketDetailsFragment"
+        android:name="com.nightstalker.artic.features.ticket.presentation.ui.detail.TicketDetailsFragment"
+        android:label="@string/label_frag_ticket_det"
+        tools:layout="@layout/fragment_ticket_details">
+        <argument
+            android:name="ticketId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/toTicketsListFragment"
+            app:destination="@id/ticketsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exhibitionsListFragment"
+        android:name="com.nightstalker.artic.features.exhibition.presentation.ui.list.ExhibitionsListFragment"
+        android:label="@string/label_frag_exi_list"
+        tools:layout="@layout/fragment_exhibitions_list">
+        <action
+            android:id="@+id/toExhibitionDetailsFragment"
+            app:destination="@id/exhibitionDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exhibitionDetailsFragment"
+        android:name="com.nightstalker.artic.features.exhibition.presentation.ui.detail.ExhibitionDetailsFragment"
+        android:label="@string/label_frag_exi_det"
+        tools:layout="@layout/fragment_exhibition_details">
+        <argument
+            android:name="exhibition_id"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/toTicketDetailsFragment"
+            app:destination="@id/ticketDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/audioLookupFragment"
+        android:name="com.nightstalker.artic.features.audio.presentation.ui.AudioLookupFragment"
+        android:label="@string/label_frag_audio_lookup"
+        tools:layout="@layout/fragment_audio_lookup" />
+    <fragment
+        android:id="@+id/artworksListFragment"
+        android:name="com.nightstalker.artic.features.artwork.presentation.ui.list.ArtworksListFragment"
+        android:label="@string/label_frag_art_list"
+        tools:layout="@layout/fragment_artworks_list">
+        <action
+            android:id="@+id/toArtworkDetailsFragment"
+            app:destination="@id/artworkDetailsFragment" />
+        <action
+            android:id="@+id/action_artworksListFragment_to_filterArtworksBottomSheetDialog"
+            app:destination="@id/filterArtworksBottomSheetDialog" />
+        <argument
+            android:name="place_filter_args"
+            android:defaultValue='""'
+            app:argType="string" />
+    </fragment>
+    <dialog
+        tools:layout="@layout/fragment_audio_player_bottom_sheet_dialog"
+        android:id="@+id/audioPlayerBottomSheetDialog"
+        android:name="com.nightstalker.artic.features.audio.presentation.ui.dialog.AudioPlayerBottomSheetDialog"
+        android:label="@string/label_frag_audio_player_bottom_sheet" />
+    <fragment
+        android:id="@+id/artworkFullViewFragment"
+        android:name="com.nightstalker.artic.features.artwork.presentation.ui.fullview.ArtworkFullViewFragment"
+        android:label="@string/label_frag_artwork_full"
+        tools:layout="@layout/fragment_artwork_full_view">
+        <argument
+            android:name="imageId"
+            app:argType="string" />
+    </fragment>
+
+
+</navigation>

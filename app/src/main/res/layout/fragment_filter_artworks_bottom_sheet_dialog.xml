@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".features.artwork.presentation.ui.dialog.FilterArtworksBottomSheetDialog">
+
+    <LinearLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Spinner
+            android:id="@+id/spCountries"
+            style="@style/SpinnerStyle"
+            android:layout_marginTop="36dp"
+            android:entries="@array/places_of_origin"
+            android:minHeight="48dp"
+            android:prompt="@string/prompt_select_country"
+            android:spinnerMode="dialog" />
+
+        <Spinner
+            android:id="@+id/spTypes"
+            style="@style/SpinnerStyle"
+            android:layout_marginTop="36dp"
+            android:entries="@array/artwork_types"
+            android:minHeight="48dp"
+            android:prompt="@string/prompt_select_type"
+            android:spinnerMode="dialog" />
+
+        <Button
+            android:id="@+id/btnApply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/text_found_artworks"
+            android:textColor="#311B92" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</FrameLayout>

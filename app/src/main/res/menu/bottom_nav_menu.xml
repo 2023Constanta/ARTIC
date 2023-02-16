@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/artworksListFragment"
+        android:icon="@drawable/ic_collection"
+        android:title="Коллекция" />
+
+    <item
+        android:id="@+id/exhibitionsListFragment"
+        android:icon="@drawable/ic_museum"
+        android:title="Выставки" />
+    <item
+        android:id="@+id/qrScanner"
+        android:icon="@drawable/ic_qr_code_24"
+        android:title="Сканер" />
+    <item
+        android:id="@+id/ticketsListFragment"
+        android:icon="@drawable/ic_shopping_cart"
+        android:title="Билеты" />
+    <item
+        android:id="@+id/audioLookupFragment"
+        android:icon="@drawable/ic_audio_large"
+        android:title="Аудио" />
+
+</menu>

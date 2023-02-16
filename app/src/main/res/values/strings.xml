@@ -1,0 +1,79 @@
+<resources>
+    <string name="app_name">ARTIC</string>
+    <!--    Названия фрагментов-->
+    <string name="label_frag_art_list">Экспонаты</string>
+    <string name="label_frag_art_det">Экспонат</string>
+    <string name="label_frag_exi_list">Выставки</string>
+    <string name="label_frag_exi_det">Выставка</string>
+    <string name="label_frag_artwork_full">Полное фото</string>
+    <string name="label_frag_ticket_list">Билеты</string>
+    <string name="label_frag_ticket_det">Билет</string>
+
+    <string name="fab_scan_qr_tooltip">Сканировать QR-код</string>
+    <string name="iv_filter">Фильтровать</string>
+    <string name="btn_buy_ticket">Купить билет</string>
+    <string name="hint_search">Поиск</string>
+
+    <!--    Сообщения-->
+    <string name="network_error_title">Ошибка подключения</string>
+    <string name="network_error_description">Проверьте соединение с сетью и обновите страницу</string>
+    <string name="loading_error_title">Ошибка</string>
+    <string name="loading_error_description">Повторите запрос или попробуйте позднее</string>
+    <string name="refresh">Обновить</string>
+    <string name="qrscanner">QRScanner</string>
+
+    <string name="get_enjoy">Get enjoy</string>
+    <string name="audio_player_cancel_audio_content_description">Close</string>
+    <string name="undo_label_button">Отменить</string>
+
+    <string name="cancel">Отмена</string>
+    <string name="grant_permissions">Предоставьте разрешение</string>
+    <string name="we_need_permission">Приложению требуется разрашение на использование камеры. Пожалуйста, предоставьте его.</string>
+    <string name="grant">Да</string>
+
+    <string name="intent_calendar_event">vnd.android.cursor.item/event</string>
+    <string name="event_location">The Art Institute of Chicago</string>
+
+    <string name="exhibition_start">Дата открытия</string>
+    <string name="exhibition_end">Дата закрытия</string>
+    <string name="audio_channel_name">Аудио</string>
+    <string name="audio_channel_description">Этот канал отвечает за уведомление аудиоплеера</string>
+    <string name="artwork_description">Vincent van Gogh so highly esteemed his bedroom painting that he made three distinct versions: the first, now in the collection of the Van Gogh Museum, Amsterdam; the second, belonging to the Art Institute of Chicago, painted a year later on the same scale and almost identical; and a third, smaller canvas in the collection of the Musée d’Orsay, Paris, which he made as a gift for his mother and sister. Van Gogh conceived the first Bedroom in October 1888, a month after he moved into his “Yellow House” in Arles, France. This moment marked the first time the artist had a home of his own, and he had immediately and enthusiastically set about decorating, painting a suite of canvases to fill the walls. Completely exhausted from the effort, he spent two-and-a-half days in bed and was then inspired to create a painting of his bedroom. As he wrote to his brother Theo, “It amused me enormously doing this bare interior. With a simplicity à la Seurat. In ﬂat tints, but coarsely brushed in full impasto, the walls pale lilac, the ﬂoor in a broken and faded red, the chairs and the bed chrome yellow, the pillows and the sheet very pale lemon green, the bedspread blood-red, the dressing-table orange, the washbasin blue, the window green. I had wished to express utter repose with all these very different tones.” Although the picture symbolized relaxation and peace to the artist, to our eyes the canvas seems to teem with nervous energy, instability, and turmoil, an effect heightened by the sharply receding perspective.</string>
+    <string name="text_found_artworks">Найдено %d экспонатов</string>
+    <string name="apply">Применить</string>
+    <string name="label_frag_scanner">Сканер</string>
+    <string name="label_frag_audio_lookup">Поиск аудио</string>
+    <string name="label_frag_audio_player_bottom_sheet">Плеер</string>
+
+    <!--    Экран поиска аудио-->
+    <string name="audio_not_found">Нет такого аудио</string>
+    <string name="enter_num_from_art_table">Введите номер аудио файла из таблички</string>
+    <string name="enter_num_val">Введите значение!</string>
+    <string name="qr_code_msg">ЭПИК и ARTIC представляют: %s в %s</string>
+
+    <string-array name="artwork_types">
+        <item>Print</item>
+        <item>Photograph</item>
+        <item>Drawing and Watercolor</item>
+        <item>Textile</item>
+        <item>Architect Drawing</item>
+        <item>Painting</item>
+        <item>Vessel</item>
+        <item>Decorative Arts</item>
+    </string-array>
+
+    <string-array name="places_of_origin">
+        <item>United States</item>
+        <item>France</item>
+        <item>Japan</item>
+        <item>England</item>
+        <item>Italy</item>
+        <item>Germany</item>
+        <item>China</item>
+        <item>Spain</item>
+    </string-array>
+
+    <string name="prompt_select_country">Select country</string>
+    <string name="prompt_select_type">Select type</string>
+
+</resources>
