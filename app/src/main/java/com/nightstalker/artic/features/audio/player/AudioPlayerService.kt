@@ -25,11 +25,12 @@ import com.nightstalker.artic.features.ApiConstants.EXTRA_AUDIO_URL
  *
  * @author Tamerlan Mamukhov on 2023-01-12
  */
-class NewAudioPlayerService : Service() {
+class AudioPlayerService : Service() {
     private val binder: Binder = NewAudioPlayerServiceBinder()
 
     val player: ExoPlayer by lazy {
-        ExoPlayer.Builder(this).build()
+        ExoPlayer.Builder(this)
+            .build()
     }
 
     // Для плеера
@@ -67,20 +68,17 @@ class NewAudioPlayerService : Service() {
 
         startForeground(1, notification)
 
-        return START_NOT_STICKY
+        return START_STICKY
     }
 
-
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        playerNotificationManager.setPlayer(null)
-//        player.release()
-//        Log.d(TAG, "onDestroy: ")
-//    }
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        super.onTaskRemoved(rootIntent)
+        stopSelf()
+    }
 
     inner class NewAudioPlayerServiceBinder : Binder() {
-        fun getService(): NewAudioPlayerService {
-            return this@NewAudioPlayerService
+        fun getService(): AudioPlayerService {
+            return this@AudioPlayerService
         }
     }
 
@@ -96,18 +94,19 @@ class NewAudioPlayerService : Service() {
             this,
             NOTIFICATION_ID,
             FOREGROUND_CHANNEL_ID
-        ).setMediaDescriptionAdapter(setMediaAdapter())
-            .setNotificationListener(setNotifMan())
+        ).setMediaDescriptionAdapter(mediaDescriptionAdapter)
+            .setNotificationListener(notificationListener)
             .build()
 
         playerNotificationManager.apply {
             setPlayer(player)
+            setUseStopAction(true)
             setSmallIcon(android.R.drawable.ic_media_play)
         }
     }
 
-    private fun setMediaAdapter(): PlayerNotificationManager.MediaDescriptionAdapter {
-        return object : PlayerNotificationManager.MediaDescriptionAdapter {
+    private val mediaDescriptionAdapter =
+        object : PlayerNotificationManager.MediaDescriptionAdapter {
             override fun getCurrentContentTitle(player: Player): CharSequence {
                 return "Test"
             }
@@ -128,21 +127,18 @@ class NewAudioPlayerService : Service() {
             }
 
         }
-    }
 
-    private fun setNotifMan(): PlayerNotificationManager.NotificationListener {
-        return object : PlayerNotificationManager.NotificationListener {
-            override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
-                stopForeground(true)
-            }
+    private val notificationListener = object : PlayerNotificationManager.NotificationListener {
+        override fun onNotificationCancelled(notificationId: Int, dismissedByUser: Boolean) {
+            stopForeground(true)
+        }
 
-            override fun onNotificationPosted(
-                notificationId: Int,
-                notification: Notification,
-                ongoing: Boolean
-            ) {
-                startForeground(notificationId, notification)
-            }
+        override fun onNotificationPosted(
+            notificationId: Int,
+            notification: Notification,
+            ongoing: Boolean
+        ) {
+            startForeground(notificationId, notification)
         }
     }
 
@@ -156,7 +152,7 @@ class NewAudioPlayerService : Service() {
         private const val TAG = "NewAudioPlayerService"
 
         fun getLaunchIntent(context: Context): Intent {
-            return Intent(context, NewAudioPlayerService::class.java)
+            return Intent(context, AudioPlayerService::class.java)
         }
     }
 }

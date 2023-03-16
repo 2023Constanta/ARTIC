@@ -1,4 +1,4 @@
-package com.nightstalker.artic.features.artwork.presentation.ui.dialog
+package com.nightstalker.artic.features.artwork.presentation.ui.filter
 
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +11,9 @@ import com.nightstalker.artic.R
 import com.nightstalker.artic.core.presentation.ext.refreshPage
 import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentFilterArtworksBottomSheetDialogBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.nightstalker.artic.features.ApiConstants.ARG_KEY_ART_PLACE
+import com.nightstalker.artic.features.ApiConstants.ARG_KEY_ART_TYPE
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * Фрагмент для фильтра эксопнатов
@@ -20,7 +22,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
  */
 class FilterArtworksBottomSheetDialog : BottomSheetDialogFragment() {
     private lateinit var binding: FragmentFilterArtworksBottomSheetDialogBinding
-    private val filterArtworksViewModel by viewModel<FilterArtworksViewModel>()
+    private val filterArtworksViewModel by sharedViewModel<FilterArtworksViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,18 +30,15 @@ class FilterArtworksBottomSheetDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?,
     ): View? {
         return inflater.inflate(
-            R.layout.fragment_filter_artworks_bottom_sheet_dialog,
-            container,
-            false
+            R.layout.fragment_filter_artworks_bottom_sheet_dialog, container, false
         )
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentFilterArtworksBottomSheetDialogBinding.bind(view)
-        restorePositions()
-        setViews()
-        saveArgs()
+        prepareViews()
         handleSearchArguments()
+        restorePositions()
 
         filterArtworksViewModel.country.observe(viewLifecycleOwner) {
             Log.d(TAG, "onViewCreated: $it")
@@ -50,70 +49,56 @@ class FilterArtworksBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
-    private fun restorePositions() {
 
-        with(filterArtworksViewModel) {
-            with(binding) {
-                countryPos.observe(viewLifecycleOwner) {
-                    spCountries.setSelection(it)
-                }
-                typePos.observe(viewLifecycleOwner) {
-                    spTypes.setSelection(it)
-                }
-            }
-        }
+    private fun handleSearchArguments() = with(filterArtworksViewModel) {
+        getNumberOfArtworks(fullQuery.value.orEmpty())
+        numberOfArtworks.observe(viewLifecycleOwner, ::handleFilterResult)
     }
 
-    private fun saveArgs() {
-
-        with(filterArtworksViewModel) {
-            setCountry(binding.spCountries.selectedItem.toString())
-            setType(binding.spTypes.selectedItem.toString())
-
-            setCountryPos(binding.spCountries.selectedItemPosition)
-            setTypePos(binding.spTypes.selectedItemPosition)
-        }
-
-    }
-
-    private fun handleSearchArguments() {
-
-        val query = filterArtworksViewModel.queryFull.value ?: ""
-        query?.let { filterArtworksViewModel.getNumberOfArtworks(it) }
-
-        filterArtworksViewModel.numberOfArtworks.observe(viewLifecycleOwner, ::handleFilterResult)
-
-    }
-
-    private fun handleFilterResult(contentResultState: ContentResultState) {
-        contentResultState.refreshPage(
-            viewToShow = binding.content,
+    private fun handleFilterResult(contentResultState: ContentResultState) =
+        contentResultState.refreshPage(viewToShow = binding.content,
             progressBar = binding.progressBar,
             onStateSuccess = {
                 binding.btnApply.text = resources.getString(R.string.text_found_artworks, it)
             })
 
-    }
 
-
-    private fun setViews() = with(binding) {
+    private fun prepareViews() = with(binding) {
         this.btnApply.setOnClickListener {
             saveArgs()
             sendArgs()
         }
     }
 
-    private fun sendArgs() {
+    private fun saveArgs() = with(filterArtworksViewModel) {
+        setCountry(binding.spCountries.selectedItem.toString())
+        setType(binding.spTypes.selectedItem.toString())
+
+        setCountryPos(binding.spCountries.selectedItemPosition)
+        setTypePos(binding.spTypes.selectedItemPosition)
+    }
+
+
+    private fun sendArgs() =
         Bundle().apply {
             with(binding) {
-                putString("place", this.spCountries.selectedItem.toString())
-                putString("type", this.spTypes.selectedItem.toString())
+                putString(ARG_KEY_ART_PLACE, this.spCountries.selectedItem.toString())
+                putString(ARG_KEY_ART_TYPE, this.spTypes.selectedItem.toString())
             }
         }.run {
             findNavController().navigate(
-                R.id.action_filterArtworksBottomSheetDialog_to_artworksListFragment,
-                this
+                R.id.action_filterArtworksBottomSheetDialog_to_artworksListFragment, this
             )
+        }
+
+    private fun restorePositions() = with(filterArtworksViewModel) {
+        with(binding) {
+            countryPos.observe(viewLifecycleOwner) {
+                spCountries.setSelection(it)
+            }
+            typePos.observe(viewLifecycleOwner) {
+                spTypes.setSelection(it)
+            }
         }
     }
 

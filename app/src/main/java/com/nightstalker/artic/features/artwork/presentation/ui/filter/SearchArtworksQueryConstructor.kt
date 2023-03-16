@@ -1,4 +1,4 @@
-package com.nightstalker.artic.features.artwork.presentation.ui.dialog
+package com.nightstalker.artic.features.artwork.presentation.ui.filter
 
 import com.nightstalker.artic.features.ApiConstants.ARTWORK_TYPE_TITLE
 import com.nightstalker.artic.features.ApiConstants.PLACE_OF_ORIGIN

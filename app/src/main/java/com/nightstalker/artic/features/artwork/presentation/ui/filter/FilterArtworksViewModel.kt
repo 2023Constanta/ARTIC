@@ -1,4 +1,4 @@
-package com.nightstalker.artic.features.artwork.presentation.ui.dialog
+package com.nightstalker.artic.features.artwork.presentation.ui.filter
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,8 +21,8 @@ class FilterArtworksViewModel(
     private val _queryWord = MutableLiveData<String>()
     val queryWord: LiveData<String> get() = _queryWord
 
-    private val _queryFull = MutableLiveData<String>()
-    val queryFull: LiveData<String> get() = _queryFull
+    private val _fullQuery = MutableLiveData<String>()
+    val fullQuery: LiveData<String> get() = _fullQuery
 
     private val _countryPos = MutableLiveData<Int>()
     val countryPos: LiveData<Int> get() = _countryPos
@@ -49,19 +49,20 @@ class FilterArtworksViewModel(
      * Создание запроса на поиск экспоната
      *
      * @param query
-     * @param place
-     * @param type
      */
-    fun setQuery(query: String, place: String, type: String) {
+    fun setQuery(query: String) {
         var searchQuery = SearchArtworksQueryConstructor.create(query)
 
-        if (place != "" || type != "") {
+        val country = _country.value.toString()
+        val type = _type.value.toString()
+
+        if (country.isNotBlank() || type.isNotBlank()) {
             searchQuery = SearchArtworksQueryConstructor.create(
-                searchQuery = query, place = place, type = type
+                searchQuery = query, place = country, type = type
             )
         }
 
-        _queryFull.value = searchQuery
+        _fullQuery.value = searchQuery
     }
 
     fun setQueryWord(word: String) {
