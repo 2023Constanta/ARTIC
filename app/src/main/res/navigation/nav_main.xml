@@ -7,7 +7,7 @@
 
     <dialog
         android:id="@+id/filterArtworksBottomSheetDialog"
-        android:name="com.nightstalker.artic.features.artwork.presentation.ui.dialog.FilterArtworksBottomSheetDialog"
+        android:name="com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksBottomSheetDialog"
         android:label="fragment_filter_artworks_bottom_sheet_dialog"
         tools:layout="@layout/fragment_filter_artworks_bottom_sheet_dialog">
         <action
@@ -21,14 +21,18 @@
         tools:layout="@layout/fragment_artwork_details">
         <argument
             android:name="poster_id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/action_artworkDetailsFragment_to_audioPlayerBottomSheetDialog"
             app:destination="@id/audioPlayerBottomSheetDialog" />
         <action
             android:id="@+id/action_artworkDetailsFragment_to_artworkFullViewFragment"
-            app:destination="@id/artworkFullViewFragment" />
+            app:destination="@id/artworkFullViewFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
     <fragment
@@ -55,11 +59,15 @@
         tools:layout="@layout/fragment_ticket_details">
         <argument
             android:name="ticketId"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/toTicketsListFragment"
-            app:destination="@id/ticketsListFragment" />
+            app:destination="@id/ticketsListFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/exhibitionsListFragment"
@@ -68,7 +76,11 @@
         tools:layout="@layout/fragment_exhibitions_list">
         <action
             android:id="@+id/toExhibitionDetailsFragment"
-            app:destination="@id/exhibitionDetailsFragment" />
+            app:destination="@id/exhibitionDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/exhibitionDetailsFragment"
@@ -77,11 +89,15 @@
         tools:layout="@layout/fragment_exhibition_details">
         <argument
             android:name="exhibition_id"
-            app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:argType="integer" />
         <action
             android:id="@+id/toTicketDetailsFragment"
-            app:destination="@id/ticketDetailsFragment" />
+            app:destination="@id/ticketDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
     <fragment
         android:id="@+id/audioLookupFragment"
@@ -95,7 +111,11 @@
         tools:layout="@layout/fragment_artworks_list">
         <action
             android:id="@+id/toArtworkDetailsFragment"
-            app:destination="@id/artworkDetailsFragment" />
+            app:destination="@id/artworkDetailsFragment"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
         <action
             android:id="@+id/action_artworksListFragment_to_filterArtworksBottomSheetDialog"
             app:destination="@id/filterArtworksBottomSheetDialog" />
