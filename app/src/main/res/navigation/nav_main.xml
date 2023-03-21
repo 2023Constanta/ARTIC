@@ -9,11 +9,7 @@
         android:id="@+id/filterArtworksBottomSheetDialog"
         android:name="com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksBottomSheetDialog"
         android:label="fragment_filter_artworks_bottom_sheet_dialog"
-        tools:layout="@layout/fragment_filter_artworks_bottom_sheet_dialog">
-        <action
-            android:id="@+id/action_filterArtworksBottomSheetDialog_to_artworksListFragment"
-            app:destination="@id/artworksListFragment" />
-    </dialog>
+        tools:layout="@layout/fragment_filter_artworks_bottom_sheet_dialog" />
     <fragment
         android:id="@+id/artworkDetailsFragment"
         android:name="com.nightstalker.artic.features.artwork.presentation.ui.detail.ArtworkDetailsFragment"
@@ -23,9 +19,6 @@
             android:name="poster_id"
             android:defaultValue="-1"
             app:argType="integer" />
-        <action
-            android:id="@+id/action_artworkDetailsFragment_to_audioPlayerBottomSheetDialog"
-            app:destination="@id/audioPlayerBottomSheetDialog" />
         <action
             android:id="@+id/action_artworkDetailsFragment_to_artworkFullViewFragment"
             app:destination="@id/artworkFullViewFragment"
@@ -37,10 +30,13 @@
 
     <fragment
         android:id="@+id/qrScanner"
-        android:name="com.nightstalker.artic.features.qrcode.QRScannerFragment"
+        android:name="com.nightstalker.artic.features.qrcode.presentation.ui.QRScannerFragment"
         android:label="@string/label_frag_scanner"
         tools:layout="@layout/fragment_qrscanner">
 
+        <action
+            android:id="@+id/action_qrScanner_to_scannedCodeFragment"
+            app:destination="@id/scannedCodeFragment" />
     </fragment>
     <fragment
         android:id="@+id/ticketsListFragment"
@@ -119,10 +115,6 @@
         <action
             android:id="@+id/action_artworksListFragment_to_filterArtworksBottomSheetDialog"
             app:destination="@id/filterArtworksBottomSheetDialog" />
-        <argument
-            android:name="place_filter_args"
-            android:defaultValue='""'
-            app:argType="string" />
     </fragment>
     <dialog
         tools:layout="@layout/fragment_audio_player_bottom_sheet_dialog"
@@ -137,6 +129,15 @@
         <argument
             android:name="imageId"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/scannedCodeFragment"
+        android:name="com.nightstalker.artic.features.qrcode.presentation.ui.ScannedCodeFragment"
+        android:label="ScannedCodeFragment">
+        <argument
+            android:name="code_content"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
 

@@ -8,7 +8,7 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.refreshPage
+import com.nightstalker.artic.core.presentation.ext.handleContent
 import com.nightstalker.artic.databinding.FragmentArtworkFullViewBinding
 import com.nightstalker.artic.features.artwork.presentation.ui.detail.ArtworkDetailsViewModel
 import kotlinx.android.synthetic.main.fragment_artwork_full_view.ivFullArtwork
@@ -38,7 +38,7 @@ class ArtworkFullViewFragment : Fragment(R.layout.fragment_artwork_full_view) {
 
     private fun observeLink() {
         artworkViewModel.detailedArtworkImageId.observe(viewLifecycleOwner) {
-            it.refreshPage(
+            it.handleContent(
                 viewToShow = binding.content,
                 progressBar = binding.progressBar,
                 onStateSuccess = { it ->

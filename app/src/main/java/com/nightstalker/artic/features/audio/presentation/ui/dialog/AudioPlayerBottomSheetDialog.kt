@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nightstalker.artic.R
 import com.nightstalker.artic.core.presentation.ext.filterHtmlEncodedText
-import com.nightstalker.artic.core.presentation.ext.handleContents
+import com.nightstalker.artic.core.presentation.ext.handleContent
 import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentAudioPlayerBottomSheetDialogBinding
 import com.nightstalker.artic.features.ApiConstants
@@ -65,10 +65,6 @@ class AudioPlayerBottomSheetDialog : BottomSheetDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentAudioPlayerBottomSheetDialogBinding.bind(view)
 
-        arguments?.getInt(ApiConstants.KEY_AUDIO_NUMBER)?.also {
-            audioViewModel.getSoundById(it)
-        }
-
         initObserver()
     }
 
@@ -77,7 +73,7 @@ class AudioPlayerBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     private fun handleAudio(contentResultState: ContentResultState) =
-        contentResultState.handleContents(
+        contentResultState.handleContent(
             onStateSuccess = { content ->
                 binding?.audioDescription?.text =
                     (content as AudioFile).transcript?.filterHtmlEncodedText()

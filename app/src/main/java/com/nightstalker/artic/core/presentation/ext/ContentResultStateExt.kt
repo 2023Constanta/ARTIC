@@ -19,7 +19,7 @@ typealias TryAgainAction = () -> Unit
  * @param onStateError          действие при неудаче
  * @author Tamerlan Mamukhov on 2023-01-07
  */
-fun ContentResultState.handleContents(
+fun ContentResultState.handleContent(
     onStateSuccess: SuccessStateAction,
     onStateError: ErrorStateAction,
     onStateLoading: LoadingStateAction? = null
@@ -44,7 +44,7 @@ fun ContentResultState.handleContents(
  * @param progressBar       [ProgressBar], показывающий процесс загрузки
  * @param errorLayout       лайаут с информацией об ошибке
  */
-fun ContentResultState.refreshPage(
+fun ContentResultState.handleContent(
     onStateSuccess: SuccessStateAction,
     tryAgainAction: TryAgainAction? = null,
     viewToShow: ViewGroup,
@@ -60,8 +60,8 @@ fun ContentResultState.refreshPage(
     errorLayout?.root?.isVisible = this is ContentResultState.Error
     if (this is ContentResultState.Error) {
         errorLayout?.apply {
-            textErrorTitle.setText(this@refreshPage.error.title)
-            textErrorDescription.setText(this@refreshPage.error.description)
+            textErrorTitle.setText(this@handleContent.error.title)
+            textErrorDescription.setText(this@handleContent.error.description)
             btnErrorTryAgain.setOnClickListener {
                 tryAgainAction?.invoke()
             }

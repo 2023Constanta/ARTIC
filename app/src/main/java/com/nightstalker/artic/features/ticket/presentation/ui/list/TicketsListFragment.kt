@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.refreshPage
+import com.nightstalker.artic.core.presentation.ext.handleContent
 import com.nightstalker.artic.core.presentation.ext.ui.setDivider
 import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentTicketsListBinding
@@ -48,7 +48,7 @@ class TicketsListFragment : Fragment(R.layout.fragment_tickets_list) {
     }
 
     private fun handleTickets(contentResultState: ContentResultState) =
-        contentResultState.refreshPage(
+        contentResultState.handleContent(
             viewToShow = binding.content,
             progressBar = binding.progressBar,
             onStateSuccess = {

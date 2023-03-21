@@ -1,16 +1,22 @@
 package com.nightstalker.artic.features.audio.presentation.ui
 
+import android.content.ComponentName
+import android.content.Context
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.handleContents
+import com.nightstalker.artic.core.presentation.ext.filterHtmlEncodedText
+import com.nightstalker.artic.core.presentation.ext.handleContent
+import com.nightstalker.artic.core.presentation.ext.ui.setupSearch
 import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentAudioLookupBinding
 import com.nightstalker.artic.features.ApiConstants
+import com.nightstalker.artic.features.audio.domain.model.AudioFile
+import com.nightstalker.artic.features.audio.player.AudioPlayerService
 import com.nightstalker.artic.features.audio.presentation.viewmodel.AudioViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -23,6 +29,23 @@ class AudioLookupFragment : Fragment(R.layout.fragment_audio_lookup) {
 
     private val audioViewModel: AudioViewModel by sharedViewModel()
     private val binding: FragmentAudioLookupBinding by viewBinding(FragmentAudioLookupBinding::bind)
+    private var boundService: AudioPlayerService? = null
+
+    private val serviceConnection = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            val binder = service as AudioPlayerService.NewAudioPlayerServiceBinder
+            boundService = binder.getService()
+
+            boundService?.let {
+                binding?.audioPlayer?.player = it.player
+            }
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            boundService = null
+        }
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,50 +55,36 @@ class AudioLookupFragment : Fragment(R.layout.fragment_audio_lookup) {
 
     private fun initObservers() = with(audioViewModel) {
         audioFileContentState.observe(viewLifecycleOwner, ::handleAudioSearch)
-        audioNumber2.observe(viewLifecycleOwner) {
-            binding.audioNumber.editText?.setText(it.toString())
+        audioNumber.observe(viewLifecycleOwner) {
+            binding.tilAudioNumber.editText?.setText(it.toString())
         }
     }
 
     private fun handleAudioSearch(contentResultState: ContentResultState) =
-        contentResultState.handleContents(
-            onStateSuccess = {
+        contentResultState.handleContent(
+            onStateSuccess = { content ->
+                binding.audioDescription?.text =
+                    (content as AudioFile).transcript?.filterHtmlEncodedText()
+
+                val serviceIntent = AudioPlayerService.getLaunchIntent(requireActivity())
+                serviceIntent.putExtra(ApiConstants.EXTRA_AUDIO_URL, content.url)
+                requireActivity().startService(serviceIntent)
+                requireActivity().bindService(
+                    serviceIntent, serviceConnection,
+                    Context.BIND_AUTO_CREATE
+                )
             },
             onStateError = {
-                binding.audioNumber.error = getString(R.string.audio_not_found)
+                binding.tilAudioNumber.error = getString(R.string.audio_not_found)
             }
         )
 
-    private fun setupView() =
-        with(binding) {
-            val tv = audioNumber.editText
-
-            audioNumber.setStartIconOnClickListener {
-                searchAudio(tv?.text?.trim().toString().toInt())
-                var soundId = 0
-                if (tv?.text?.toString()?.isNotEmpty() == true) {
-                    soundId = tv.text.toString().toInt()
-                }
-
-                findNavController().navigate(
-                    R.id.audioPlayerBottomSheetDialog,
-                    args = bundleOf(ApiConstants.KEY_AUDIO_NUMBER to soundId)
-                )
-
-            }
+    private fun setupView() = with(binding) {
+        tilAudioNumber.editText?.setupSearch {
+            audioViewModel.performSearchById(it)
         }
+    }
 
-    private fun searchAudio(sequence: Int = 0): Boolean =
-        when (sequence) {
-            null -> {
-                true
-            }
-            else -> {
-                audioViewModel.performSearchById(sequence)
-                audioViewModel.audioNumber2.value = sequence
-                true
-            }
-        }
 
     companion object {
         private const val TAG = "AudioLookupFragment"

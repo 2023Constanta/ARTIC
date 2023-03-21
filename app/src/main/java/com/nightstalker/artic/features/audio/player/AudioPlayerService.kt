@@ -28,10 +28,7 @@ import com.nightstalker.artic.features.ApiConstants.EXTRA_AUDIO_URL
 class AudioPlayerService : Service() {
     private val binder: Binder = NewAudioPlayerServiceBinder()
 
-    val player: ExoPlayer by lazy {
-        ExoPlayer.Builder(this)
-            .build()
-    }
+    val player: ExoPlayer by lazy { ExoPlayer.Builder(this).build() }
 
     // Для плеера
     private lateinit var playerNotificationManager: PlayerNotificationManager
