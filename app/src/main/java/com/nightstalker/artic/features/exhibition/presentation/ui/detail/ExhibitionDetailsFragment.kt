@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.refreshPage
+import com.nightstalker.artic.core.presentation.ext.handleContent
 import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentExhibitionDetailsBinding
 import com.nightstalker.artic.features.ApiConstants
@@ -41,7 +41,7 @@ class ExhibitionDetailsFragment : Fragment(R.layout.fragment_exhibition_details)
     }
 
     private fun handleExhibition(contentResultState: ContentResultState) =
-        contentResultState.refreshPage(
+        contentResultState.handleContent(
             viewToShow = binding.content,
             progressBar = binding.progressBar,
             onStateSuccess = {

@@ -1,21 +1,20 @@
 package com.nightstalker.artic.features.artwork.presentation.ui.list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.refreshPage
+import com.nightstalker.artic.core.presentation.ext.handleContent
+import com.nightstalker.artic.core.presentation.ext.ui.setDivider
 import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentArtworksListBinding
 import com.nightstalker.artic.features.artwork.domain.model.Artwork
-import com.nightstalker.artic.features.artwork.presentation.ui.dialog.FilterArtworksViewModel
+import com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -27,17 +26,16 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
 
     private val binding: FragmentArtworksListBinding by viewBinding(FragmentArtworksListBinding::bind)
     private lateinit var adapter: ArtworksListAdapter
-    private val viewModel by viewModel<ArtworksListViewModel>()
-    private val searchViewModel by viewModel<FilterArtworksViewModel>()
+    private val artworksListViewModel by viewModel<ArtworksListViewModel>()
+    private val filterArtworksViewModel by sharedViewModel<FilterArtworksViewModel>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         initArtworkObserver()
-        observeFullQuery()
 
-        viewModel.loadArtworks()
+        artworksListViewModel.loadArtworks()
 
         prepareSearch()
 
@@ -48,7 +46,7 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
     }
 
     private fun prepareWord() {
-        searchViewModel.queryWord.observe(viewLifecycleOwner) {
+        filterArtworksViewModel.queryWord.observe(viewLifecycleOwner) {
             with(binding?.tilSearch?.editText) {
                 if (this?.text?.isEmpty() == true) {
                     this?.setText(it)
@@ -66,19 +64,8 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
 
             rvArtworks.apply {
                 this.adapter = adapter
-                val divider = DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
-                ContextCompat.getDrawable(this.context, R.drawable.line_divider)
-                    ?.let { divider.setDrawable(it) }
-                this.addItemDecoration(
-                    divider
-                )
+                this.setDivider(R.drawable.line_divider)
             }
-        }
-    }
-
-    private fun observeFullQuery() {
-        searchViewModel.queryFull.observe(viewLifecycleOwner) {
-            Log.d(TAG, "observerQuery: $it")
         }
     }
 
@@ -87,13 +74,12 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
             tilSearch.apply {
                 editText?.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-
-                        getArgs()
                         val word = editText?.text.toString()
-                        searchViewModel.setQuery(word, place, type)
-                        searchViewModel.setQueryWord(word)
 
-                        viewModel.getArtworksByQuery(searchViewModel.queryFull.value!!)
+                        filterArtworksViewModel.setQuery(word)
+                        filterArtworksViewModel.setQueryWord(word)
+
+                        artworksListViewModel.getArtworksByQuery(filterArtworksViewModel.fullQuery.value.toString())
 
                         initObserversForSearchedArtworks()
                     }
@@ -107,15 +93,18 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
     }
 
     private fun initArtworkObserver() =
-        viewModel.artworksContentState.observe(viewLifecycleOwner, ::handleArtworks)
+        artworksListViewModel.artworksContentState.observe(viewLifecycleOwner, ::handleArtworks)
 
     private fun initObserversForSearchedArtworks() =
-        viewModel.searchedArtworksContentState.observe(viewLifecycleOwner, ::handleSearchedArtworks)
+        artworksListViewModel.searchedArtworksContentState.observe(
+            viewLifecycleOwner,
+            ::handleSearchedArtworks
+        )
 
     private fun handleArtworks(contentResultState: ContentResultState) =
         with(binding) {
             ivLoadDefault.visibility = View.GONE
-            contentResultState.refreshPage(
+            contentResultState.handleContent(
                 viewToShow = content,
                 onStateSuccess = {
                     adapter.setData(it as List<Artwork>)
@@ -124,7 +113,7 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
                 progressBar = progressBar,
                 errorLayout = errorLayout,
                 tryAgainAction = {
-                    viewModel.getArtworks()
+                    artworksListViewModel.getArtworks()
                 })
         }
 
@@ -132,7 +121,7 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
     private fun handleSearchedArtworks(contentResultState: ContentResultState) =
         with(binding) {
             ivLoadDefault.visibility = View.VISIBLE
-            contentResultState.refreshPage(
+            contentResultState.handleContent(
                 viewToShow = content,
                 onStateSuccess = {
                     adapter.setData(it as List<Artwork>)
@@ -141,39 +130,23 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
                 progressBar = progressBar,
                 errorLayout = errorLayout,
                 tryAgainAction = {
-                    viewModel.getArtworks()
+                    artworksListViewModel.getArtworks()
                 }
             )
         }
 
     private fun setLoadingDefault() {
         binding?.ivLoadDefault?.setOnClickListener {
-            viewModel.getArtworks()
+            artworksListViewModel.getArtworks()
         }
     }
 
     private fun tryAgain() {
-        viewModel.getArtworks()
+        artworksListViewModel.getArtworks()
         initArtworkObserver()
     }
 
     private fun onItemClick(id: Int) = ArtworksListFragmentDirections.toArtworkDetailsFragment(id)
         .run { findNavController().navigate(this) }
-
-    private fun getArgs() {
-        arguments?.apply {
-            place = getString("place").toString()
-            type = getString("type").toString()
-
-            Log.d(TAG, "getArgs: $place")
-            Log.d(TAG, "getArgs: $type")
-        }
-    }
-
-    companion object {
-        private var place = ""
-        private var type = ""
-        private const val TAG = "ArtworksListFragment"
-    }
 
 }

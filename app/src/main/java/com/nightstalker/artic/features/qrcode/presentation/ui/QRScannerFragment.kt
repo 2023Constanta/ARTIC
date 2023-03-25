@@ -1,10 +1,10 @@
-package com.nightstalker.artic.features.qrcode
+package com.nightstalker.artic.features.qrcode.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
 import com.nightstalker.artic.databinding.FragmentQrscannerBinding
@@ -80,9 +80,19 @@ class QRScannerFragment : Fragment(R.layout.fragment_qrscanner), ZBarScannerView
         scannerView.stopCamera()
     }
 
-    override fun handleResult(rawResult: Result?) {
-        Toast.makeText(activity, rawResult?.contents, Toast.LENGTH_LONG).show()
-        scannerView.resumeCameraPreview(this)
-    }
+//    override fun handleResult(rawResult: Result?) {
+//        Toast.makeText(activity, rawResult?.contents, Toast.LENGTH_LONG).show()
+//        scannerView.resumeCameraPreview(this)
+//    }
 
+
+    override fun handleResult(rawResult: Result?) {
+        findNavController().navigate(
+            QRScannerFragmentDirections.actionQrScannerToScannedCodeFragment(
+                rawResult?.contents
+            )
+        )
+//        Toast.makeText(activity, rawResult?.contents, Toast.LENGTH_LONG).show()
+//        scannerView.resumeCameraPreview(this)
+    }
 }

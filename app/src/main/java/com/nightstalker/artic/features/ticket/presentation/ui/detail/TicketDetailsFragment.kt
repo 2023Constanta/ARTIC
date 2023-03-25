@@ -8,8 +8,8 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.MainActivity
 import com.nightstalker.artic.R
+import com.nightstalker.artic.core.presentation.ext.handleContent
 import com.nightstalker.artic.core.presentation.ext.reformatIso8601
-import com.nightstalker.artic.core.presentation.ext.refreshPage
 import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentTicketDetailsBinding
 import com.nightstalker.artic.features.ApiConstants
@@ -97,7 +97,7 @@ class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
     }
 
     private fun handleTicket(contentResultState: ContentResultState) =
-        contentResultState.refreshPage(
+        contentResultState.handleContent(
             viewToShow = binding.content,
             progressBar = binding.progressBar,
             onStateSuccess = {
