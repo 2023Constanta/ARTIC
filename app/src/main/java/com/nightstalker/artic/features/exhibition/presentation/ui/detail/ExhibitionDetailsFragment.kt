@@ -9,11 +9,11 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.handleContent
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentExhibitionDetailsBinding
 import com.nightstalker.artic.features.ApiConstants
 import com.nightstalker.artic.features.exhibition.domain.model.Exhibition
+import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.core.presentation.model.ContentResultState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**

@@ -9,15 +9,15 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.filterHtmlEncodedText
-import com.nightstalker.artic.core.presentation.ext.handleContent
-import com.nightstalker.artic.core.presentation.ext.ui.setupSearch
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentAudioLookupBinding
 import com.nightstalker.artic.features.ApiConstants
 import com.nightstalker.artic.features.audio.domain.model.AudioFile
 import com.nightstalker.artic.features.audio.player.AudioPlayerService
 import com.nightstalker.artic.features.audio.presentation.viewmodel.AudioViewModel
+import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.core.presentation.ext.primitives.filterHtmlEncodedText
+import com.nightstalker.core.presentation.model.ContentResultState
+import com.nightstalker.core.presentation.ui.setupSearch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -80,9 +80,11 @@ class AudioLookupFragment : Fragment(R.layout.fragment_audio_lookup) {
         )
 
     private fun setupView() = with(binding) {
-        tilAudioNumber.editText?.setupSearch {
+        tilAudioNumber.editText?.setupSearch(
+            textRes = R.string.enter_num_val,
+            callback =  {
             audioViewModel.performSearchById(it)
-        }
+         })
     }
 
 

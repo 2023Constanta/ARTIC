@@ -15,10 +15,7 @@
     <string name="hint_search">Поиск</string>
 
     <!--    Сообщения-->
-    <string name="network_error_title">Ошибка подключения</string>
-    <string name="network_error_description">Проверьте соединение с сетью и обновите страницу</string>
-    <string name="loading_error_title">Ошибка</string>
-    <string name="loading_error_description">Повторите запрос или попробуйте позднее</string>
+
     <string name="refresh">Обновить</string>
     <string name="qrscanner">QRScanner</string>
 

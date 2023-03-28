@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="refresh">Обновить</string>
+
+    <string name="network_error_title">Ошибка подключения</string>
+    <string name="network_error_description">Проверьте соединение с сетью и обновите страницу</string>
+    <string name="loading_error_title">Ошибка</string>
+    <string name="loading_error_description">Повторите запрос или попробуйте позднее</string>
+    <string name="date_format">dd/MM/yyyy</string>
+</resources>

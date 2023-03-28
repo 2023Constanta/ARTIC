@@ -8,9 +8,9 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.handleContent
 import com.nightstalker.artic.databinding.FragmentArtworkFullViewBinding
 import com.nightstalker.artic.features.artwork.presentation.ui.detail.ArtworkDetailsViewModel
+import com.nightstalker.core.presentation.ext.handleContent
 import kotlinx.android.synthetic.main.fragment_artwork_full_view.ivFullArtwork
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

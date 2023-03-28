@@ -1,10 +1,10 @@
 package com.nightstalker.artic.features.ticket.data.mappers
 
-import com.nightstalker.artic.core.presentation.ext.normalizeEventDateTime
-import com.nightstalker.artic.core.presentation.ext.toCalendarInMillis
 import com.nightstalker.artic.features.ApiConstants
 import com.nightstalker.artic.features.ticket.data.room.TicketEntity
 import com.nightstalker.artic.features.ticket.domain.model.ExhibitionTicket
+import com.nightstalker.core.presentation.ext.primitives.normalizeEventDateTime
+import com.nightstalker.core.presentation.ext.primitives.toCalendarInMillis
 
 
 /**

@@ -1,10 +1,10 @@
 package com.nightstalker.artic.features.artwork.domain.usecase
 
-import com.nightstalker.artic.core.domain.model.ResultState
-import com.nightstalker.artic.core.domain.model.safeCall
 import com.nightstalker.artic.features.artwork.domain.model.Artwork
 import com.nightstalker.artic.features.artwork.domain.model.ArtworkInformation
 import com.nightstalker.artic.features.artwork.domain.repo.ArtworkRepo
+import com.nightstalker.core.domain.model.ResultState
+import com.nightstalker.core.domain.model.safeCall
 
 /**
  * Юз кейс для получения результата с данными экспонатов

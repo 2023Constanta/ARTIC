@@ -1,9 +1,9 @@
 package com.nightstalker.artic.features.ticket.domain.usecase
 
-import com.nightstalker.artic.core.domain.model.ResultState
-import com.nightstalker.artic.core.domain.model.safeCall
 import com.nightstalker.artic.features.ticket.domain.model.ExhibitionTicket
 import com.nightstalker.artic.features.ticket.domain.repo.TicketsRepo
+import com.nightstalker.core.domain.model.ResultState
+import com.nightstalker.core.domain.model.safeCall
 
 class TicketUseCase(
     private val repo: TicketsRepo

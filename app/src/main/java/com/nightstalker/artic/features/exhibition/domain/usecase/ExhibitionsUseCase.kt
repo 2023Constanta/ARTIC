@@ -1,9 +1,9 @@
 package com.nightstalker.artic.features.exhibition.domain.usecase
 
-import com.nightstalker.artic.core.domain.model.ResultState
-import com.nightstalker.artic.core.domain.model.safeCall
 import com.nightstalker.artic.features.exhibition.domain.model.Exhibition
 import com.nightstalker.artic.features.exhibition.domain.repo.ExhibitionsRepo
+import com.nightstalker.core.domain.model.ResultState
+import com.nightstalker.core.domain.model.safeCall
 
 /**
  * @author Tamerlan Mamukhov

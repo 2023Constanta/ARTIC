@@ -2,10 +2,10 @@ package com.nightstalker.artic.features.artwork.presentation.ui.detail
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.nightstalker.artic.core.presentation.ext.viewModelCall
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.features.ImageLinkCreator
 import com.nightstalker.artic.features.artwork.domain.usecase.ArtworksUseCase
+import com.nightstalker.core.presentation.ext.viewModelCall
+import com.nightstalker.core.presentation.model.ContentResultState
 
 /**
  * Вью модель для получения деталей экспоната
