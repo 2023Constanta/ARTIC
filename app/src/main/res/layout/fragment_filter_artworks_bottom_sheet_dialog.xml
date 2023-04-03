@@ -33,6 +33,14 @@
             android:spinnerMode="dialog" />
 
         <Button
+            android:id="@+id/btnRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="Refresh"
+            android:textColor="#311B92" />
+
+        <Button
             android:id="@+id/btnApply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

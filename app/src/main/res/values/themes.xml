@@ -20,4 +20,11 @@
         <item name="colorOnSecondary">@color/text</item>
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     </style>
+
+    <style name="Theme.Artic.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/light_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_artic_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Artic.AmberOrange</item>
+    </style>
+
 </resources>

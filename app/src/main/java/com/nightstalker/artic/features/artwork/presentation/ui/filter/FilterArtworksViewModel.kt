@@ -39,11 +39,42 @@ class FilterArtworksViewModel(
     /**
      * Получение числа найденных экспонатов по запросу
      */
-    fun getNumberOfArtworks(query: String) =
+//    fun getNumberOfArtworks(query: String) =
+//        viewModelCall(
+//            call = { useCase.getNumber(query) },
+//            contentResultState = _numberOfArtworks
+//        )
+
+    fun resetNumber() {
+        if (_numberOfArtworks.value is ContentResultState.Content) {
+            _numberOfArtworks.value = ContentResultState.Loading
+            return
+        }
+    }
+
+    fun getNumberOfArtworks(query: String) {
+
+        resetNumber()
+//        if (_numberOfArtworks.value is ContentResultState.Content) {
+//            _numberOfArtworks.value = ContentResultState.Loading
+//        }
+
+        var searchQuery = SearchArtworksQueryConstructor.create(query)
+
+        val country = _country.value.toString()
+        val type = _type.value.toString()
+
+        if (country.isNotBlank() || type.isNotBlank()) {
+            searchQuery = SearchArtworksQueryConstructor.create(
+                searchQuery = query, place = country, type = type
+            )
+        }
+
         viewModelCall(
-            call = { useCase.getNumber(query) },
+            call = { useCase.getNumber(searchQuery) },
             contentResultState = _numberOfArtworks
         )
+    }
 
     /**
      * Создание запроса на поиск экспоната
