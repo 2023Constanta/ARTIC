@@ -1,6 +1,7 @@
 package com.nightstalker.artic.features.qrcode.presentation.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
 import com.nightstalker.artic.databinding.FragmentQrscannerBinding
 import com.nightstalker.artic.features.qrcode.QrCodeGenerator.QR_BORDER_STROKE_WIDTH
+import com.nightstalker.core.presentation.ext.ui.snack
 import me.dm7.barcodescanner.zbar.Result
 import me.dm7.barcodescanner.zbar.ZBarScannerView
 
@@ -67,7 +69,6 @@ class QRScannerFragment : Fragment(R.layout.fragment_qrscanner), ZBarScannerView
     override fun onResume() {
         super.onResume()
         scannerView.setResultHandler(this)
-        scannerView.startCamera()
     }
 
     override fun onPause() {
@@ -77,22 +78,20 @@ class QRScannerFragment : Fragment(R.layout.fragment_qrscanner), ZBarScannerView
 
     override fun onDestroy() {
         super.onDestroy()
-        scannerView.stopCamera()
     }
-
-//    override fun handleResult(rawResult: Result?) {
-//        Toast.makeText(activity, rawResult?.contents, Toast.LENGTH_LONG).show()
-//        scannerView.resumeCameraPreview(this)
-//    }
 
 
     override fun handleResult(rawResult: Result?) {
-        findNavController().navigate(
-            QRScannerFragmentDirections.actionQrScannerToScannedCodeFragment(
-                rawResult?.contents
+        if (rawResult?.contents?.contains(Regex("exhibitions*/+\\d*(?:/+\\d+)*$")) == true) {
+            Log.d("Scanner", "handleResult: ${rawResult?.contents}")
+            findNavController().navigate(
+                QRScannerFragmentDirections.actionQrScannerToScannedCodeFragment(
+                    rawResult?.contents
+                )
             )
-        )
-//        Toast.makeText(activity, rawResult?.contents, Toast.LENGTH_LONG).show()
-//        scannerView.resumeCameraPreview(this)
+        } else {
+            binding.root.snack(getString(R.string.error_wrong_qr))
+        }
+
     }
 }

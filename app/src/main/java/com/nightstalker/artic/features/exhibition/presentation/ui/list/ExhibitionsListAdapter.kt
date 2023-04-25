@@ -1,5 +1,6 @@
 package com.nightstalker.artic.features.exhibition.presentation.ui.list
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,9 @@ class ExhibitionsListAdapter(
         with(holder.binding) {
             textTitle.text = item.title
             placeImage.load(item.imageUrl)
+            cardSave.setOnClickListener {
+                Log.d("Info", "onBindViewHolder: !!!!")
+            }
             root.setOnClickListener {
                 onItemClicked(item.id)
             }

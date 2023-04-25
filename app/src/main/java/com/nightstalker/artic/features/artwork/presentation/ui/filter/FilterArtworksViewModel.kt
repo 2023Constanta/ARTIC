@@ -36,29 +36,12 @@ class FilterArtworksViewModel(
     private val _type = MutableLiveData<String>()
     val type: LiveData<String> get() = _type
 
-    /**
-     * Получение числа найденных экспонатов по запросу
-     */
-//    fun getNumberOfArtworks(query: String) =
-//        viewModelCall(
-//            call = { useCase.getNumber(query) },
-//            contentResultState = _numberOfArtworks
-//        )
-
-    fun resetNumber() {
-        if (_numberOfArtworks.value is ContentResultState.Content) {
-            _numberOfArtworks.value = ContentResultState.Loading
-            return
-        }
+    fun resetNumber() = if (_numberOfArtworks.value is ContentResultState.Content) {
+        _numberOfArtworks.value = ContentResultState.Content(null)
+    } else {
     }
 
     fun getNumberOfArtworks(query: String) {
-
-        resetNumber()
-//        if (_numberOfArtworks.value is ContentResultState.Content) {
-//            _numberOfArtworks.value = ContentResultState.Loading
-//        }
-
         var searchQuery = SearchArtworksQueryConstructor.create(query)
 
         val country = _country.value.toString()

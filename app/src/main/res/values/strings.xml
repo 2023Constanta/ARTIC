@@ -72,5 +72,6 @@
 
     <string name="prompt_select_country">Select country</string>
     <string name="prompt_select_type">Select type</string>
+    <string name="error_wrong_qr">Неверный код!</string>
 
 </resources>

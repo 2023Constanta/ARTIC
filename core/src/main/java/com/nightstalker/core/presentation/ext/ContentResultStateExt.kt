@@ -50,15 +50,25 @@ fun ContentResultState.handleContent(
     viewToShow: ViewGroup,
     progressBar: ProgressBar,
     errorLayout: LayoutErrorBinding? = null,
-) {
-    if (this is ContentResultState.Content) {
+) = when (this) {
+
+    is ContentResultState.Content -> {
+        progressBar.isVisible = false
+        errorLayout?.root?.isVisible = false
         viewToShow.isVisible = true
+
         onStateSuccess.invoke(this.content)
     }
+    is ContentResultState.Loading -> {
+        progressBar.isVisible = true
+        errorLayout?.root?.isVisible = false
+        viewToShow.isVisible = false
+    }
+    is ContentResultState.Error -> {
+        progressBar.isVisible = false
+        errorLayout?.root?.isVisible = true
+        viewToShow.isVisible = false
 
-
-    errorLayout?.root?.isVisible = this is ContentResultState.Error
-    if (this is ContentResultState.Error) {
         errorLayout?.apply {
             textErrorTitle.setText(this@handleContent.error.title)
             textErrorDescription.setText(this@handleContent.error.description)
@@ -68,5 +78,4 @@ fun ContentResultState.handleContent(
         }
     }
 
-    progressBar.isVisible = this is ContentResultState.Loading
 }

@@ -132,13 +132,14 @@ class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
         //QRCode
         qrCodeImageView.setImageBitmap(
             QrCodeGenerator.makeImage(
-                String.format(
-                    getString(
-                        R.string.qr_code_msg,
-                        ticket.title,
-                        ticket.galleryTitle
-                    )
-                )
+                "exhibitions/${ticket.exhibitionId}"
+//                String.format(
+//                    getString(
+//                        R.string.qr_code_msg,
+//                        ticket.title,
+//                        ticket.galleryTitle
+//                    )
+//                )
             )
         )
 

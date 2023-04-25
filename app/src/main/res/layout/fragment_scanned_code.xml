@@ -1,33 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTitle"
+        style="@style/TextAppearance.Material3.TitleMedium"
+        android:text="Заголовок"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvCodeContent"
+        style="@style/TextAppearance.Material3.TitleSmall"
+        tools:text="Содержимое"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnOpenDetails"
+        android:text="Открыть"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
-
-    <Button
-        android:id="@+id/btnSearchOnWeb"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 
     <Button
         android:id="@+id/btnCopyToClip"
+        android:text="Скопировать"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btnShare"
+        android:text="Поделиться"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

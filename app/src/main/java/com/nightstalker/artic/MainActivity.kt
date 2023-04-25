@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     private val artworkDetailsViewModel by viewModel<ArtworkDetailsViewModel>()
     private val exhibitionsViewModel by viewModel<ExhibitionDetailsViewModel>()
     private val filterArtworksViewModel by viewModel<FilterArtworksViewModel>()
+//    private val artworksListViewModel by viewModel<ArtworksListViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
