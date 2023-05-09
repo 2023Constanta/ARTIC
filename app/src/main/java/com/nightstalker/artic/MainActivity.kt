@@ -6,7 +6,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.provider.Settings
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -57,6 +60,24 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            Handler(Looper.getMainLooper()).post {
+                when (destination.id) {
+                    R.id.artworksListFragment,
+                    R.id.exhibitionsListFragment,
+                    R.id.qrScanner,
+                    R.id.ticketsListFragment,
+                    R.id.audioLookupFragment
+                    -> {
+                        botNavView.visibility = View.VISIBLE
+                    }
+                    else -> {
+                        botNavView.visibility = View.GONE
+                    }
+                }
+            }
+        }
         botNavView.setupWithNavController(navController)
     }
 
@@ -64,7 +85,7 @@ class MainActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean =
         findNavController(R.id.navHostFragment).navigateUp() || super.onSupportNavigateUp()
 
-// Регистрация события в календаре Google
+    // Регистрация события в календаре Google
     fun addCalendarEvent(params: Map<String, String>) {
         val intent = Intent(Intent.ACTION_EDIT)
         intent.type = EVENT_CALENDAR_TYPE
@@ -79,8 +100,8 @@ class MainActivity : AppCompatActivity() {
                 else -> intent.putExtra(it.key, it.value)
             }
         }
-    startActivity(intent)
-}
+        startActivity(intent)
+    }
 
     private fun checkForPermission() {
         if (ActivityCompat.checkSelfPermission(

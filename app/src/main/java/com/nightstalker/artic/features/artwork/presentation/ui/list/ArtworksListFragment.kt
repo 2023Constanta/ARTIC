@@ -6,10 +6,10 @@ import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
 import com.nightstalker.artic.core.presentation.ext.ui.setDivider
+import com.nightstalker.artic.core.presentation.ext.ui.setup
 import com.nightstalker.artic.databinding.FragmentArtworksListBinding
 import com.nightstalker.artic.features.artwork.domain.model.Artwork
 import com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksViewModel
@@ -53,14 +53,10 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
 
 
     private fun prepareAdapter() = with(binding) {
-        rvArtworks.layoutManager =
-            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         adapter = ArtworksListAdapter { id -> onItemClick(id) }
 
-        rvArtworks.apply {
-            this.adapter = adapter
-            this.setDivider(R.drawable.line_divider)
-        }
+        rvArtworks.setup(requireActivity(), adapter)
+        rvArtworks.setDivider(R.drawable.line_divider)
     }
 
     private fun prepareSearch() = with(binding) {
@@ -103,32 +99,30 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
 
     private fun handleArtworks(contentResultState: ContentResultState) = with(binding) {
         contentResultState.handleContent(
-            viewToShow = content,
             onStateSuccess = {
                 adapter.setData(it as List<Artwork>)
                 rvArtworks.adapter = adapter
             },
-            progressBar = progressBar,
-            errorLayout = errorLayout,
             tryAgainAction = {
                 artworksListViewModel.getArtworks()
-            })
+            },
+            viewToShow = content,
+            errorView = errare
+        )
     }
-
 
     private fun handleSearchedArtworks(contentResultState: ContentResultState) = with(binding) {
         contentResultState.handleContent(
-            viewToShow = content,
             onStateSuccess = {
                 adapter.setData(it as List<Artwork>)
                 rvArtworks.adapter = adapter
             },
-            progressBar = progressBar,
-            errorLayout = errorLayout,
             tryAgainAction = {
                 artworksListViewModel.getArtworks()
                 initArtworkObserver()
-            }
+            },
+            viewToShow = content,
+            errorView = errare
         )
     }
 

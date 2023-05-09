@@ -2,7 +2,9 @@ package com.nightstalker.artic.core.presentation.ext.ui
 
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 /**
@@ -23,4 +25,9 @@ fun RecyclerView.setDivider(@DrawableRes drawableRes: Int) {
         divider.setDrawable(it)
         addItemDecoration(divider)
     }
+}
+
+fun RecyclerView.setup(activity: FragmentActivity, adapter: RecyclerView.Adapter<*>) {
+    this.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+    this.adapter = adapter
 }

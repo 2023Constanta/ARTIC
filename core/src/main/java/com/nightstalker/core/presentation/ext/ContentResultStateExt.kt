@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import com.nightstalker.core.databinding.LayoutErrorBinding
 import com.nightstalker.core.presentation.model.ContentResultState
 import com.nightstalker.core.presentation.model.ErrorModel
+import com.nightstalker.core.presentation.ui.LayoutErrorView
 
 typealias SuccessStateAction = (content: Any?) -> Unit
 typealias ErrorStateAction = (error: ErrorModel) -> Unit
@@ -77,5 +78,42 @@ fun ContentResultState.handleContent(
             }
         }
     }
+}
 
+/**
+ * Функция, которая упрощает работу с [ContentResultState]
+ *
+ * @param onStateSuccess    действие при успехе загрузки данных
+ * @param tryAgainAction    бействие при неудаче (напр., повторная загрузка)
+ * @param viewToShow        [ViewGroup], которую надо показать после загрузки данных
+ * @param errorView      лайаут с информацией об ошибке
+ */
+fun ContentResultState.handleContent(
+    onStateSuccess: SuccessStateAction,
+    tryAgainAction: TryAgainAction? = null,
+    viewToShow: ViewGroup,
+    errorView: LayoutErrorView? = null
+) = when (this) {
+    is ContentResultState.Content -> {
+        errorView?.setViewInvis()
+        viewToShow.isVisible = true
+        onStateSuccess.invoke(this.content)
+    }
+    is ContentResultState.Loading -> {
+        errorView?.setViewVis()
+        errorView?.setProgressVisibility(true)
+        viewToShow.isVisible = false
+    }
+    is ContentResultState.Error -> {
+        errorView?.setViewVis()
+        errorView?.let {
+            it.setProgressVisibility(false)
+            it.setTextForTitle(this@handleContent.error.title)
+            it.setTextForDescription(this@handleContent.error.description)
+            it.setListenerForButton {
+                tryAgainAction?.invoke()
+            }
+        }
+        viewToShow.isVisible = false
+    }
 }

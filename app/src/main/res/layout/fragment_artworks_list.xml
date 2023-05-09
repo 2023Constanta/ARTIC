@@ -11,10 +11,11 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:visibility="gone">
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvArtworks"
+            tools:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
@@ -45,23 +46,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
-        <include
-            android:id="@+id/error_layout"
-            layout="@layout/layout_error"
-            android:visibility="gone"
+        <com.nightstalker.core.presentation.ui.LayoutErrorView
+            android:id="@+id/errare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:loadingProgressMode="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
 
 </FrameLayout>
