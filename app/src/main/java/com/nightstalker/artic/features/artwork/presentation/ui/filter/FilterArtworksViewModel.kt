@@ -3,9 +3,9 @@ package com.nightstalker.artic.features.artwork.presentation.ui.filter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.nightstalker.artic.core.presentation.ext.viewModelCall
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.features.artwork.domain.usecase.ArtworksUseCase
+import com.nightstalker.core.presentation.ext.viewModelCall
+import com.nightstalker.core.presentation.model.ContentResultState
 
 /**
  * [ViewModel] для поиска экспонатов
@@ -36,14 +36,28 @@ class FilterArtworksViewModel(
     private val _type = MutableLiveData<String>()
     val type: LiveData<String> get() = _type
 
-    /**
-     * Получение числа найденных экспонатов по запросу
-     */
-    fun getNumberOfArtworks(query: String) =
+    fun resetNumber() = if (_numberOfArtworks.value is ContentResultState.Content) {
+        _numberOfArtworks.value = ContentResultState.Content(null)
+    } else {
+    }
+
+    fun getNumberOfArtworks(query: String) {
+        var searchQuery = SearchArtworksQueryConstructor.create(query)
+
+        val country = _country.value.toString()
+        val type = _type.value.toString()
+
+        if (country.isNotBlank() || type.isNotBlank()) {
+            searchQuery = SearchArtworksQueryConstructor.create(
+                searchQuery = query, place = country, type = type
+            )
+        }
+
         viewModelCall(
-            call = { useCase.getNumber(query) },
+            call = { useCase.getNumber(searchQuery) },
             contentResultState = _numberOfArtworks
         )
+    }
 
     /**
      * Создание запроса на поиск экспоната

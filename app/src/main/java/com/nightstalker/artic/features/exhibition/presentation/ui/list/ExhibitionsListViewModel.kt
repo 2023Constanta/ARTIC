@@ -2,9 +2,9 @@ package com.nightstalker.artic.features.exhibition.presentation.ui.list
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.nightstalker.artic.core.presentation.ext.viewModelCall
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.features.exhibition.domain.usecase.ExhibitionsUseCase
+import com.nightstalker.core.presentation.ext.viewModelCall
+import com.nightstalker.core.presentation.model.ContentResultState
 
 /**
  * Вью модель для получения экспонатов

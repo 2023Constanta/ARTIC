@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LayoutErrorView">
+        <attr name="applyButtonText" format="string" />
+        <attr name="errorTitleText" format="string" />
+        <attr name="errorDescriptionText" format="string" />
+        <attr name="loadingProgressMode" format="boolean" />
+    </declare-styleable>
+</resources>

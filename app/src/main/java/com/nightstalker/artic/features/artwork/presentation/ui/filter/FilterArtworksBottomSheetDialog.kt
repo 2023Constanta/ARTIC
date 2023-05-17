@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.handleContent
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentFilterArtworksBottomSheetDialogBinding
+import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.core.presentation.model.ContentResultState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -33,64 +33,51 @@ class FilterArtworksBottomSheetDialog : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentFilterArtworksBottomSheetDialogBinding.bind(view)
+
         prepareViews()
-        handleSearchArguments()
         restorePositions()
+        handleSearchArguments()
     }
-
-    // TODO: хочу сделать так, чтобы при изменении места и/или типа обновлялось кол-во экспонатов...
-//    private fun listenToChanges() {
-//        binding.spTypes.onItemClickListener = object : OnItemSelectedListener,
-//            AdapterView.OnItemClickListener {
-//            override fun onItemSelected(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//            }
-//
-//            override fun onItemClick(
-//                parent: AdapterView<*>?,
-//                view: View?,
-//                position: Int,
-//                id: Long
-//            ) {
-//            }
-//        }
-//    }
-
 
     private fun handleSearchArguments() = with(filterArtworksViewModel) {
         getNumberOfArtworks(fullQuery.value.orEmpty())
         numberOfArtworks.observe(viewLifecycleOwner, ::handleFilterResult)
     }
 
-    private fun handleFilterResult(contentResultState: ContentResultState) =
-        contentResultState.handleContent(viewToShow = binding.content,
-            progressBar = binding.progressBar,
+    private fun handleFilterResult(contentResultState: ContentResultState) = with(binding) {
+        contentResultState.handleContent(
+            viewToShow = content,
+            progressBar = progressBar,
             onStateSuccess = {
-                binding.btnApply.text = resources.getString(R.string.text_found_artworks, it)
-            })
-
+                btnApply.text = resources.getString(R.string.text_found_artworks, it)
+            }
+        )
+    }
 
     private fun prepareViews() = with(binding) {
-        this.btnApply.setOnClickListener {
+        btnApply.setOnClickListener {
             saveArgs()
+
             findNavController().popBackStack()
+        }
+
+        btnRefresh.setOnClickListener {
+//            filterArtworksViewModel.resetNumber()
+            saveArgs()
+            handleSearchArguments()
         }
     }
 
     private fun saveArgs() = with(filterArtworksViewModel) {
-        setCountry(binding.spCountries.selectedItem.toString())
-        setType(binding.spTypes.selectedItem.toString())
+        with(binding.spTypes) {
+            setType(selectedItem.toString())
+            setTypePos(selectedItemPosition)
+        }
 
-        setCountryPos(binding.spCountries.selectedItemPosition)
-        setTypePos(binding.spTypes.selectedItemPosition)
+        with(binding.spCountries) {
+            setCountry(selectedItem.toString())
+            setCountryPos(selectedItemPosition)
+        }
     }
 
 

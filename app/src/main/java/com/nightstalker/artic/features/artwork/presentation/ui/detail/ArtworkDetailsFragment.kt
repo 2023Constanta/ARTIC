@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import coil.load
-import com.nightstalker.artic.core.presentation.ext.handleContent
-import com.nightstalker.artic.core.presentation.model.ContentResultState
-import com.nightstalker.artic.core.presentation.ui.ViewBindingFragment
 import com.nightstalker.artic.databinding.FragmentArtworkDetailsBinding
 import com.nightstalker.artic.features.ImageLinkCreator
 import com.nightstalker.artic.features.artwork.domain.model.Artwork
 import com.nightstalker.artic.features.artwork.domain.model.ArtworkInformation
+import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.core.presentation.model.ContentResultState
+import com.nightstalker.core.presentation.ui.ViewBindingFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**

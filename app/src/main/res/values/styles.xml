@@ -13,7 +13,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="ListItemsTitle" parent="BaseHeaderTextStyle"></style>
+    <style name="ListItemsTitle" parent="BaseHeaderTextStyle" />
 
     <style name="ListItemsShortDescription" parent="BaseTextStyle">
         <item name="android:textSize">16sp</item>

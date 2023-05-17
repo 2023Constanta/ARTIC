@@ -1,9 +1,9 @@
 package com.nightstalker.artic.features.audio.domain.usecase
 
-import com.nightstalker.artic.core.domain.model.ResultState
-import com.nightstalker.artic.core.domain.model.safeCall
 import com.nightstalker.artic.features.audio.domain.model.AudioFile
 import com.nightstalker.artic.features.audio.domain.repo.AudioRepo
+import com.nightstalker.core.domain.model.ResultState
+import com.nightstalker.core.domain.model.safeCall
 
 /**
  * @author Tamerlan Mamukhov

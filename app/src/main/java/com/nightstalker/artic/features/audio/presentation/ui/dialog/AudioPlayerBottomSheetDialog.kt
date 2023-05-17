@@ -11,14 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.filterHtmlEncodedText
-import com.nightstalker.artic.core.presentation.ext.handleContent
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentAudioPlayerBottomSheetDialogBinding
 import com.nightstalker.artic.features.ApiConstants
 import com.nightstalker.artic.features.audio.domain.model.AudioFile
 import com.nightstalker.artic.features.audio.player.AudioPlayerService
 import com.nightstalker.artic.features.audio.presentation.viewmodel.AudioViewModel
+import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.core.presentation.ext.primitives.filterHtmlEncodedText
+import com.nightstalker.core.presentation.model.ContentResultState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**

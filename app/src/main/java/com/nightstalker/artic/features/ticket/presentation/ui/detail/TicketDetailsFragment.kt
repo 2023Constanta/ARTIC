@@ -8,9 +8,6 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.MainActivity
 import com.nightstalker.artic.R
-import com.nightstalker.artic.core.presentation.ext.handleContent
-import com.nightstalker.artic.core.presentation.ext.reformatIso8601
-import com.nightstalker.artic.core.presentation.model.ContentResultState
 import com.nightstalker.artic.databinding.FragmentTicketDetailsBinding
 import com.nightstalker.artic.features.ApiConstants
 import com.nightstalker.artic.features.exhibition.data.mappers.toExhibitionTicket
@@ -19,6 +16,9 @@ import com.nightstalker.artic.features.exhibition.presentation.ui.detail.Exhibit
 import com.nightstalker.artic.features.qrcode.QrCodeGenerator
 import com.nightstalker.artic.features.ticket.data.mappers.toCalendarEvent
 import com.nightstalker.artic.features.ticket.domain.model.ExhibitionTicket
+import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.core.presentation.ext.primitives.reformatIso8601
+import com.nightstalker.core.presentation.model.ContentResultState
 import kotlinx.android.synthetic.main.fragment_ticket_details.addCalendarEventButton
 import kotlinx.android.synthetic.main.fragment_ticket_details.deleteTicketButton
 import kotlinx.android.synthetic.main.fragment_ticket_details.undoTicketButton
@@ -132,13 +132,14 @@ class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
         //QRCode
         qrCodeImageView.setImageBitmap(
             QrCodeGenerator.makeImage(
-                String.format(
-                    getString(
-                        R.string.qr_code_msg,
-                        ticket.title,
-                        ticket.galleryTitle
-                    )
-                )
+                "exhibitions/${ticket.exhibitionId}"
+//                String.format(
+//                    getString(
+//                        R.string.qr_code_msg,
+//                        ticket.title,
+//                        ticket.galleryTitle
+//                    )
+//                )
             )
         )
 

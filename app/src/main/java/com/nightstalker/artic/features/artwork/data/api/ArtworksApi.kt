@@ -1,9 +1,5 @@
 package com.nightstalker.artic.features.artwork.data.api
 
-import com.nightstalker.artic.features.artwork.data.model.ArtworkData
-import com.nightstalker.artic.features.artwork.data.model.information.ArtworkInformationModel
-import com.nightstalker.artic.core.data.model.common.ItemsListResultModel
-import com.nightstalker.artic.core.data.model.common.SingeItemResultModel
 import com.nightstalker.artic.features.ApiConstants.ARTIST_DISPLAY
 import com.nightstalker.artic.features.ApiConstants.ID
 import com.nightstalker.artic.features.ApiConstants.IMAGE_ID
@@ -11,6 +7,10 @@ import com.nightstalker.artic.features.ApiConstants.PARAMS
 import com.nightstalker.artic.features.ApiConstants.PLACE_OF_ORIGIN
 import com.nightstalker.artic.features.ApiConstants.SOUND_IDS
 import com.nightstalker.artic.features.ApiConstants.TITLE
+import com.nightstalker.artic.features.artwork.data.model.ArtworkData
+import com.nightstalker.artic.features.artwork.data.model.information.ArtworkInformationModel
+import com.nightstalker.core.data.model.common.ItemsListResultModel
+import com.nightstalker.core.data.model.common.SingeItemResultModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

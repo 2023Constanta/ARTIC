@@ -11,10 +11,11 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:visibility="gone">
+        >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvArtworks"
+            tools:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
@@ -32,7 +33,7 @@
             android:hint="@string/hint_search"
             app:endIconDrawable="@drawable/ic_filter_list"
             app:endIconMode="custom"
-            app:layout_constraintEnd_toStartOf="@id/ivLoadDefault"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -40,39 +41,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableEnd="?android:attr/actionModeWebSearchDrawable"
-                android:imeOptions="actionSearch"
+                android:imeOptions="actionDone"
                 android:inputType="text" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <ImageView
-            android:id="@+id/ivLoadDefault"
+        <com.nightstalker.core.presentation.ui.LayoutErrorView
+            android:id="@+id/errare"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_delete"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/tilSearch"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tilSearch"
-            app:layout_goneMarginEnd="0dp"
-            app:tint="@color/primary" />
-
-        <include
-            android:id="@+id/error_layout"
-            layout="@layout/layout_error"
-            android:visibility="gone"
+            tools:loadingProgressMode="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
 
 </FrameLayout>

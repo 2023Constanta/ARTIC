@@ -1,13 +1,13 @@
 package com.nightstalker.artic.features.audio.data.api
 
-import com.nightstalker.artic.core.data.model.common.ItemsListResultModel
-import com.nightstalker.artic.core.data.model.common.SingeItemResultModel
 import com.nightstalker.artic.features.ApiConstants.ID
 import com.nightstalker.artic.features.ApiConstants.PARAMS
 import com.nightstalker.artic.features.ApiConstants.TITLE
 import com.nightstalker.artic.features.ApiConstants.TRANSCRIPT
 import com.nightstalker.artic.features.ApiConstants.WEB_URL
 import com.nightstalker.artic.features.audio.data.model.MobileSoundData
+import com.nightstalker.core.data.model.common.ItemsListResultModel
+import com.nightstalker.core.data.model.common.SingeItemResultModel
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
