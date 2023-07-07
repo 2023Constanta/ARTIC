@@ -8,9 +8,14 @@ import androidx.lifecycle.ViewModel
  *
  * @constructor Create empty Qr code view model
  */
-class QrCodeViewModel : ViewModel() {
+class QrCodeViewModel(
+
+) : ViewModel() {
+
     private var _scanResult = MutableLiveData<String>()
     val scanResult get() = _scanResult
+
+
 
 
 }

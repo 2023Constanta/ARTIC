@@ -14,6 +14,9 @@ import com.nightstalker.core.presentation.ext.ui.snack
 import me.dm7.barcodescanner.zbar.Result
 import me.dm7.barcodescanner.zbar.ZBarScannerView
 
+/**
+ * Экран сканирования Qr-кода
+ */
 class QRScannerFragment : Fragment(R.layout.fragment_qrscanner), ZBarScannerView.ResultHandler {
 
     private val binding: FragmentQrscannerBinding by viewBinding(FragmentQrscannerBinding::bind)
@@ -27,7 +30,7 @@ class QRScannerFragment : Fragment(R.layout.fragment_qrscanner), ZBarScannerView
     }
 
     private fun initializeQRCamera() {
-        scannerView = ZBarScannerView(activity)
+        scannerView = ZBarScannerView(requireActivity())
         with(scannerView) {
             setResultHandler(this@QRScannerFragment)
             setBackgroundColor(ContextCompat.getColor(context!!, R.color.colorTranslucent))
@@ -44,17 +47,11 @@ class QRScannerFragment : Fragment(R.layout.fragment_qrscanner), ZBarScannerView
 
     private fun startQRCamera() = scannerView.startCamera()
 
-    private fun onFlashToggleClicked() =
-        with(binding) {
-            flashToggle.setOnClickListener {
-                if (flashToggle.isSelected) {
-                    offFlashLight()
-                } else {
-                    onFlashLight()
-                }
-            }
-
+    private fun onFlashToggleClicked() = with(binding) {
+        flashToggle.setOnClickListener {
+            if (flashToggle.isSelected) offFlashLight() else onFlashLight()
         }
+    }
 
     private fun onFlashLight() {
         binding.flashToggle.isSelected = true
@@ -76,22 +73,20 @@ class QRScannerFragment : Fragment(R.layout.fragment_qrscanner), ZBarScannerView
         scannerView.stopCamera()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
     override fun handleResult(rawResult: Result?) {
-        if (rawResult?.contents?.contains(Regex("exhibitions*/+\\d*(?:/+\\d+)*$")) == true) {
-            Log.d("Scanner", "handleResult: ${rawResult?.contents}")
+        if (rawResult?.contents?.contains(regexExhibitions) == true) {
+            Log.d("Scanner", "handleResult: ${rawResult.contents}")
             findNavController().navigate(
                 QRScannerFragmentDirections.actionQrScannerToScannedCodeFragment(
-                    rawResult?.contents
+                    rawResult.contents
                 )
             )
         } else {
             binding.root.snack(getString(R.string.error_wrong_qr))
         }
+    }
 
+    companion object {
+        private val regexExhibitions = Regex("exhibitions*/+\\d*(?:/+\\d+)*$")
     }
 }
