@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -13,7 +14,9 @@ import androidx.navigation.fragment.navArgs
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
 import com.nightstalker.artic.databinding.FragmentScannedCodeBinding
+import com.nightstalker.artic.features.qrcode.presentation.QrCodeViewModel
 import com.nightstalker.core.presentation.ext.ui.snack
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
  * Фрагмент, который показывает информацию о выставке, которая доступна по коду
@@ -22,6 +25,7 @@ class ScannedCodeFragment : Fragment(R.layout.fragment_scanned_code) {
 
     private val args by navArgs<ScannedCodeFragmentArgs>()
     private val binding: FragmentScannedCodeBinding by viewBinding(FragmentScannedCodeBinding::bind)
+    private val qrCodeViewModel: QrCodeViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,6 +37,14 @@ class ScannedCodeFragment : Fragment(R.layout.fragment_scanned_code) {
         val exhibitionsId = args.codeContent?.replace("\\D".toRegex(), "")
 
         tvCodeContent.text = exhibitionsId
+        exhibitionsId?.toInt()?.let { qrCodeViewModel.getData(it) }
+
+        qrCodeViewModel.exhibitionData.observe(viewLifecycleOwner) {
+            Log.d("Scanned", "setupViews: $it")
+        }
+
+
+
         btnOpenDetails.setOnClickListener {
             findNavController().navigate(
                 R.id.exhibitionDetailsFragment,

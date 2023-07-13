@@ -6,6 +6,7 @@ import com.nightstalker.artic.features.audio.di.audioModules
 import com.nightstalker.artic.features.di.databaseModule
 import com.nightstalker.artic.features.di.networkModule
 import com.nightstalker.artic.features.exhibition.di.exhibitionModules
+import com.nightstalker.artic.features.qrcode.di.qrPresentationModule
 import com.nightstalker.artic.features.ticket.di.ticketModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -24,6 +25,8 @@ class ArticApp : Application() {
             modules(audioModules)
             modules(networkModule)
             modules(databaseModule)
+
+            modules(qrPresentationModule)
         }
     }
 

@@ -1,7 +1,9 @@
 package com.nightstalker.artic.features.exhibition.data.mappers
 
+import com.nightstalker.artic.features.exhibition.data.model.ExhibitionBriefData
 import com.nightstalker.artic.features.exhibition.data.model.ExhibitionData
 import com.nightstalker.artic.features.exhibition.domain.model.Exhibition
+import com.nightstalker.artic.features.qrcode.domain.model.ExhibitionBriefDataDom
 import com.nightstalker.artic.features.ticket.domain.model.ExhibitionTicket
 import java.util.Date
 
@@ -36,3 +38,5 @@ fun Exhibition.toExhibitionTicket(): ExhibitionTicket =
         aicStartAt = aicStartAt ?: "",
         timestamp = Date().time
     )
+
+fun ExhibitionBriefData.toDomain(): ExhibitionBriefDataDom = ExhibitionBriefDataDom(id, title, shortDescription)

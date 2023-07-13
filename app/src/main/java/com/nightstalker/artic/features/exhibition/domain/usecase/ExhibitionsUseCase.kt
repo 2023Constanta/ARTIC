@@ -2,6 +2,7 @@ package com.nightstalker.artic.features.exhibition.domain.usecase
 
 import com.nightstalker.artic.features.exhibition.domain.model.Exhibition
 import com.nightstalker.artic.features.exhibition.domain.repo.ExhibitionsRepo
+import com.nightstalker.artic.features.qrcode.domain.model.ExhibitionBriefDataDom
 import com.nightstalker.core.domain.model.ResultState
 import com.nightstalker.core.domain.model.safeCall
 
@@ -16,4 +17,6 @@ class ExhibitionsUseCase(
         safeCall { repo.getExhibitionById(id) }
 
     suspend fun getExhibitions(): ResultState<List<Exhibition>> = safeCall { repo.getExhibitions() }
+
+    suspend fun getBrief(id: Int): ResultState<ExhibitionBriefDataDom> = safeCall { repo.getBrief(id) }
 }
