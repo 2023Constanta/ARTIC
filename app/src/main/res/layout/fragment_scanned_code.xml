@@ -1,41 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvTitle"
-        style="@style/TextAppearance.Material3.TitleMedium"
-        android:text="Заголовок"
+        style="@style/TextAppearance.Material3.TitleLarge"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:textAlignment="center"
+        tools:text="Заголовок"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvCodeContent"
-        style="@style/TextAppearance.Material3.TitleSmall"
-        tools:text="Содержимое"
+        style="@style/TextAppearance.Material3.TitleMedium"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        tools:text="Содержимое" />
+
+    <androidx.constraintlayout.helper.widget.Flow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:constraint_referenced_ids="btnOpenDetails,btnCopyToClip,btnShare"
+        app:flow_horizontalGap="10dp"
+        app:flow_horizontalStyle="spread"
+        app:flow_verticalGap="10dp"
+        app:flow_verticalStyle="spread"
+        app:flow_wrapMode="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnOpenDetails"
-        android:text="Открыть"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/btn_open_qr_details" />
 
     <Button
         android:id="@+id/btnCopyToClip"
-        android:text="Скопировать"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/btn_copy_qr_details" />
 
     <Button
         android:id="@+id/btnShare"
-        android:text="Поделиться"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/btn_share_qr_details" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import com.nightstalker.artic.features.ApiConstants.IMAGE_URL
 import com.nightstalker.artic.features.ApiConstants.SHORT_DESCRIPTION
 import com.nightstalker.artic.features.ApiConstants.STATUS
 import com.nightstalker.artic.features.ApiConstants.TITLE
+import com.nightstalker.artic.features.exhibition.data.model.ExhibitionBriefData
 import com.nightstalker.artic.features.exhibition.data.model.ExhibitionData
 import com.nightstalker.core.data.model.common.ItemsListResultModel
 import com.nightstalker.core.data.model.common.SingeItemResultModel
@@ -25,4 +26,7 @@ interface ExhibitionsApi {
 
     @GET("exhibitions/search?sort[aic_end_at]=DESC&fields=$ID,$IMAGE_URL,$GALLERY_TITLE,$TITLE,$ALT_IMAGE_IDS,$STATUS,$SHORT_DESCRIPTION,${ApiConstants.AICSTARTAT},${ApiConstants.AICENDAT}")
     suspend fun getExhibitions(): ItemsListResultModel<ExhibitionData>
+
+    @GET("exhibitions/{$ID}?fields=id,title,short_description")
+    suspend fun getExhibBriefData(@Path(ID) id: Int) : SingeItemResultModel<ExhibitionBriefData>
 }
