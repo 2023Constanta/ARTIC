@@ -32,20 +32,20 @@ class ArtworkDetailsFragment : ViewBindingFragment<FragmentArtworkDetailsBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObserver()
 
         args.posterId.run {
             artworkViewModel.getArtwork(this)
             artworkViewModel.getArtworkInformation(this)
         }
-        initObserver()
     }
 
     private fun initObserver() = with(artworkViewModel) {
-        artworkContentState.observe(viewLifecycleOwner, ::handle)
-        artworkDescriptionState.observe(viewLifecycleOwner, ::handle)
+        artworkContentState.observe(viewLifecycleOwner, ::handleResult)
+        artworkDescriptionState.observe(viewLifecycleOwner, ::handleResult)
     }
 
-    private fun handle(contentResultState: ContentResultState) = withSafeBinding {
+    private fun handleResult(contentResultState: ContentResultState) = withSafeBinding {
         contentResultState.handleContent(
             viewToShow = content,
             progressBar = progressBar,

@@ -15,6 +15,7 @@ import com.nightstalker.artic.features.artwork.domain.model.Artwork
 import com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksViewModel
 import com.nightstalker.core.presentation.ext.handleContent
 import com.nightstalker.core.presentation.model.ContentResultState
+import kotlinx.android.synthetic.main.fragment_artwork_details.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -39,18 +40,17 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
 
         prepareSearch()
 
-        prepareWord()
+        insertSearchWord()
         prepareAdapter()
     }
 
-    private fun prepareWord() = filterArtworksViewModel.queryWord.observe(viewLifecycleOwner) {
+    private fun insertSearchWord() = filterArtworksViewModel.queryWord.observe(viewLifecycleOwner) {
         with(binding.tilSearch.editText) {
             if (this?.text?.isEmpty() == true) {
                 this.setText(it)
             }
         }
     }
-
 
     private fun prepareAdapter() = with(binding) {
         adapter = ArtworksListAdapter { id -> onItemClick(id) }
@@ -75,10 +75,10 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
                 false
             }
 
-            // Кнопка фильтра
             setEndIconOnClickListener {
                 findNavController().navigate(R.id.action_artworksListFragment_to_filterArtworksBottomSheetDialog)
             }
+
             setEndIconOnLongClickListener {
                 Toast.makeText(activity, "SBROSS", Toast.LENGTH_SHORT).show()
                 artworksListViewModel.getArtworks()
@@ -87,14 +87,13 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
         }
     }
 
-
     private fun initArtworkObserver() =
         artworksListViewModel.artworksContentState.observe(viewLifecycleOwner, ::handleArtworks)
 
     private fun initObserversForSearchedArtworks() =
         artworksListViewModel.searchedArtworksContentState.observe(
             viewLifecycleOwner,
-            ::handleSearchedArtworks
+            ::handleArtworks
         )
 
     private fun handleArtworks(contentResultState: ContentResultState) = with(binding) {
@@ -105,21 +104,6 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
             },
             tryAgainAction = {
                 artworksListViewModel.getArtworks()
-            },
-            viewToShow = content,
-            errorView = errare
-        )
-    }
-
-    private fun handleSearchedArtworks(contentResultState: ContentResultState) = with(binding) {
-        contentResultState.handleContent(
-            onStateSuccess = {
-                adapter.setData(it as List<Artwork>)
-                rvArtworks.adapter = adapter
-            },
-            tryAgainAction = {
-                artworksListViewModel.getArtworks()
-                initArtworkObserver()
             },
             viewToShow = content,
             errorView = errare

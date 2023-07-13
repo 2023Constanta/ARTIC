@@ -59,6 +59,17 @@
         <item>Decorative Arts</item>
     </string-array>
 
+    <string-array name="artwork_types_human">
+        <item>Печатное</item>
+        <item>Фотография</item>
+        <item>Рисунок и акварель</item>
+        <item>Текстиль</item>
+        <item>Архитектурный чертеж</item>
+        <item>Рисунки</item>
+        <item>Сосуд</item>
+        <item>Декоративное искусство</item>
+    </string-array>
+
     <string-array name="places_of_origin">
         <item>United States</item>
         <item>France</item>
@@ -68,6 +79,17 @@
         <item>Germany</item>
         <item>China</item>
         <item>Spain</item>
+    </string-array>
+
+    <string-array name="places_of_origin_human">
+        <item>США</item>
+        <item>Франция</item>
+        <item>Япония</item>
+        <item>Англия</item>
+        <item>Италия</item>
+        <item>Германия</item>
+        <item>Китай</item>
+        <item>Испания</item>
     </string-array>
 
     <string name="prompt_select_country">Select country</string>

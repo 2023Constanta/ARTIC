@@ -18,7 +18,6 @@
             android:id="@+id/spCountries"
             style="@style/SpinnerStyle"
             android:layout_marginTop="36dp"
-            android:entries="@array/places_of_origin"
             android:minHeight="48dp"
             android:prompt="@string/prompt_select_country"
             android:spinnerMode="dialog" />
@@ -27,7 +26,6 @@
             android:id="@+id/spTypes"
             style="@style/SpinnerStyle"
             android:layout_marginTop="36dp"
-            android:entries="@array/artwork_types"
             android:minHeight="48dp"
             android:prompt="@string/prompt_select_type"
             android:spinnerMode="dialog" />
