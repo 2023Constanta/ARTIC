@@ -31,15 +31,9 @@ class FilterArtworksViewModel(
     val typePos: LiveData<Int> get() = _typePos
 
     private val _country = MutableLiveData<String>()
-    val country: LiveData<String> get() = _country
 
     private val _type = MutableLiveData<String>()
-    val type: LiveData<String> get() = _type
 
-    fun resetNumber() = if (_numberOfArtworks.value is ContentResultState.Content) {
-        _numberOfArtworks.value = ContentResultState.Content(null)
-    } else {
-    }
 
     fun getNumberOfArtworks(query: String) {
         var searchQuery = SearchArtworksQueryConstructor.create(query)
