@@ -2,7 +2,6 @@ package com.nightstalker.artic.features.exhibition.presentation.ui.detail
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -10,7 +9,6 @@ import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
 import com.nightstalker.artic.R
 import com.nightstalker.artic.databinding.FragmentExhibitionDetailsBinding
-import com.nightstalker.artic.features.ApiConstants
 import com.nightstalker.artic.features.exhibition.domain.model.Exhibition
 import com.nightstalker.core.presentation.ext.handleContent
 import com.nightstalker.core.presentation.model.ContentResultState
@@ -29,15 +27,10 @@ class ExhibitionDetailsFragment : Fragment(R.layout.fragment_exhibition_details)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        exhibitionsViewModel.exhibition.observe(viewLifecycleOwner, ::handleExhibition)
         args.exhibitionId.run {
             exhibitionsViewModel.getExhibition(this)
         }
-        initObserver()
-    }
-
-    private fun initObserver() {
-        exhibitionsViewModel.exhibitionContentState.observe(viewLifecycleOwner, ::handleExhibition)
     }
 
     private fun handleExhibition(contentResultState: ContentResultState) =
@@ -46,8 +39,7 @@ class ExhibitionDetailsFragment : Fragment(R.layout.fragment_exhibition_details)
             progressBar = binding.progressBar,
             onStateSuccess = {
                 setViews(it as Exhibition)
-            },
-            errorLayout = binding.errorLayout
+            }
         )
 
 
@@ -57,14 +49,15 @@ class ExhibitionDetailsFragment : Fragment(R.layout.fragment_exhibition_details)
         ivImage.load(exhibition.imageUrl.orEmpty())
 
         buyTicketFloatingActionButton.setOnClickListener {
-            findNavController().navigate(
-                R.id.ticketDetailsFragment,
-                bundleOf(ApiConstants.BUNDLE_EXHIBITION_ID to args.exhibitionId)
-            )
+            findNavController().navigate(ExhibitionDetailsFragmentDirections.actionExhibitionDetailsFragmentToBuyTicketFragment())
+//            findNavController().navigate(
+//                R.id.ticketDetailsFragment,
+//                bundleOf(ApiConstants.BUNDLE_EXHIBITION_ID to args.exhibitionId)
+//            )
         }
     }
 
     companion object {
-        const val TAG = "ExhibitionDetailFragment"
+        private const val TAG = "ExhibitionDetailFragment"
     }
 }

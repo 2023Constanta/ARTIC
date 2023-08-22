@@ -94,6 +94,9 @@
             app:exitAnim="@anim/nav_default_exit_anim"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_exhibitionDetailsFragment_to_buyTicketFragment"
+            app:destination="@id/buyTicketFragment" />
     </fragment>
     <fragment
         android:id="@+id/audioLookupFragment"
@@ -139,6 +142,10 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/buyTicketFragment"
+        android:name="com.nightstalker.artic.features.exhibition.presentation.ui.detail.BuyTicketFragment"
+        android:label="BuyTicketFragment" />
 
 
 </navigation>

@@ -53,8 +53,7 @@ class TicketsListFragment : Fragment(R.layout.fragment_tickets_list) {
             progressBar = binding.progressBar,
             onStateSuccess = {
                 adapter.setData(it as List<ExhibitionTicket>)
-            },
-            errorLayout = binding.errorLayout
+            }
         )
 
     private fun onItemClicked(id: Long) {
