@@ -1,5 +1,6 @@
 package com.nightstalker.artic.features.exhibition.presentation.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nightstalker.artic.features.exhibition.domain.usecase.ExhibitionsUseCase
@@ -16,12 +17,12 @@ class ExhibitionDetailsViewModel(
     private val useCase: ExhibitionsUseCase
 ) : ViewModel() {
 
-    private var _exhibitionContentState = MutableLiveData<ContentResultState>()
-    val exhibitionContentState get() = _exhibitionContentState
+    private var _exhibition = MutableLiveData<ContentResultState>()
+    val exhibition: LiveData<ContentResultState> get() = _exhibition
 
     fun getExhibition(id: Int) = viewModelCall(
         call = { useCase.getExhibitionById(id) },
-        contentResultState = _exhibitionContentState
+        contentResultState = _exhibition
     )
 
 }

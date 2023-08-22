@@ -1,7 +1,9 @@
 package com.nightstalker.artic.features.artwork.presentation.ui.list
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -100,7 +102,6 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
         contentResultState.handleContent(
             onStateSuccess = {
                 adapter.setData(it as List<Artwork>)
-                rvArtworks.adapter = adapter
             },
             tryAgainAction = {
                 artworksListViewModel.getArtworks()

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.nightstalker.artic.R
 import com.nightstalker.artic.core.presentation.ext.ui.setDivider
+import com.nightstalker.artic.core.presentation.ext.ui.setup
 import com.nightstalker.artic.databinding.FragmentExhibitionsListBinding
 import com.nightstalker.artic.features.exhibition.domain.model.Exhibition
 import com.nightstalker.core.presentation.ext.handleContent
@@ -36,10 +37,8 @@ class ExhibitionsListFragment : Fragment(R.layout.fragment_exhibitions_list) {
 
     private fun prepareAdapter() =
         with(binding) {
-            rvExhibitions.layoutManager =
-                LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
             adapter = ExhibitionsListAdapter { id -> onItemClicked(id) }
-            rvExhibitions.adapter = adapter
+            rvExhibitions.setup(requireActivity(), adapter)
             rvExhibitions.setDivider(R.drawable.line_divider)
         }
 
@@ -55,7 +54,6 @@ class ExhibitionsListFragment : Fragment(R.layout.fragment_exhibitions_list) {
                 adapter.setData(it as List<Exhibition>)
                 binding.rvExhibitions.adapter = adapter
             },
-            errorLayout = binding.errorLayout,
             tryAgainAction = {
                 tryAgain()
             }

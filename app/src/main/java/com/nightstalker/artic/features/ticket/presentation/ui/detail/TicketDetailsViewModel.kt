@@ -1,5 +1,6 @@
 package com.nightstalker.artic.features.ticket.presentation.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nightstalker.artic.features.ticket.data.mappers.toExhibitionTicket
@@ -17,8 +18,16 @@ import com.nightstalker.core.presentation.model.ContentResultState
  * @created 2022-10-13
  */
 class TicketDetailsViewModel(private val dao: TicketDao) : ViewModel() {
-    private var _ticketContent = MutableLiveData<ContentResultState>()
-    val ticketContent get() = _ticketContent
+    private val _ticket = MutableLiveData<ContentResultState>()
+    val ticket: LiveData<ContentResultState> get() = _ticket
+
+    private val _undoTicket = MutableLiveData<ExhibitionTicket>()
+    val undoTicket: LiveData<ExhibitionTicket> get() = _undoTicket
+
+    fun saveUndoTicket(ticket: ExhibitionTicket) {
+        _undoTicket.value = ticket
+    }
+
 
     fun getTicket(id: Long) =
         viewModelCall(
@@ -27,7 +36,7 @@ class TicketDetailsViewModel(private val dao: TicketDao) : ViewModel() {
                     dao.getTicketById(id).toExhibitionTicket()
                 }
             },
-            contentResultState = _ticketContent
+            contentResultState = _ticket
         )
 
     fun deleteTicket(ticketId: Long, exhibitionId: String) =

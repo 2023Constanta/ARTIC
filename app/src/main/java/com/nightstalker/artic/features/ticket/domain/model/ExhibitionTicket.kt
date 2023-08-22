@@ -28,4 +28,5 @@ data class ExhibitionTicket(
     val shortDescription: String = "",
     val numberOfPersons: Int = 1,
     val timestamp: Long = 0L,
+//    val comments: String = ""
 )
