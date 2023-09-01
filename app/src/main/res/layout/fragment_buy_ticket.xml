@@ -55,7 +55,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilLastName"
-        android:text="Информация"
+        android:text="@string/info"
         android:id="@+id/tvTicketInfo" />
 
     <Button

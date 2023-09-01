@@ -15,12 +15,15 @@ import com.nightstalker.core.presentation.model.ContentResultState
 class FilterArtworksViewModel(
     private val useCase: ArtworksUseCase
 ) : ViewModel() {
+
     private val _numberOfArtworks = MutableLiveData<ContentResultState>()
-    val numberOfArtworks get() = _numberOfArtworks
+    val numberOfArtworks: LiveData<ContentResultState> get() = _numberOfArtworks
 
-    private val _queryWord = MutableLiveData<String>()
-    val queryWord: LiveData<String> get() = _queryWord
+    // "Сырой" запрос из поиска
+    private val _searchQuery = MutableLiveData<String>()
+    val searchQuery: LiveData<String> get() = _searchQuery
 
+    // Готовый запрос дял поиска
     private val _fullQuery = MutableLiveData<String>()
     val fullQuery: LiveData<String> get() = _fullQuery
 
@@ -31,22 +34,32 @@ class FilterArtworksViewModel(
     val typePos: LiveData<Int> get() = _typePos
 
     private val _country = MutableLiveData<String>()
-
     private val _type = MutableLiveData<String>()
 
 
-    fun getNumberOfArtworks(query: String) {
-        var searchQuery = SearchArtworksQueryConstructor.create(query)
+    // Получение числа экспонатов по запросу
+    fun getNumberOfArtworks() {
+        val rawQuery = _searchQuery.value ?: ""
+        var searchQuery = SearchArtworksQueryConstructor.create(rawQuery)
 
         val country = _country.value.toString()
         val type = _type.value.toString()
 
         if (country.isNotBlank() || type.isNotBlank()) {
             searchQuery = SearchArtworksQueryConstructor.create(
-                searchQuery = query, place = country, type = type
+                searchQuery = rawQuery, place = country, type = type
             )
         }
 
+        viewModelCall(
+            call = { useCase.getNumber(searchQuery) },
+            contentResultState = _numberOfArtworks
+        )
+    }
+
+    fun resetQuery() {
+        _searchQuery.value = ""
+        var searchQuery = SearchArtworksQueryConstructor.create("")
         viewModelCall(
             call = { useCase.getNumber(searchQuery) },
             contentResultState = _numberOfArtworks
@@ -58,23 +71,24 @@ class FilterArtworksViewModel(
      *
      * @param query
      */
-    fun setQuery(query: String) {
-        var searchQuery = SearchArtworksQueryConstructor.create(query)
+    fun getReadyQuery() {
+        val rawQuery = _searchQuery.value!!
+        var searchQuery = SearchArtworksQueryConstructor.create(rawQuery)
 
         val country = _country.value.toString()
         val type = _type.value.toString()
 
         if (country.isNotBlank() || type.isNotBlank()) {
             searchQuery = SearchArtworksQueryConstructor.create(
-                searchQuery = query, place = country, type = type
+                searchQuery = rawQuery, place = country, type = type
             )
         }
 
         _fullQuery.value = searchQuery
     }
 
-    fun setQueryWord(word: String) {
-        _queryWord.value = word
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
     }
 
     fun setCountry(country: String) {

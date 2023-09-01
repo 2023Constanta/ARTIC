@@ -1,9 +1,7 @@
 package com.nightstalker.artic.features.artwork.presentation.ui.list
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -17,7 +15,6 @@ import com.nightstalker.artic.features.artwork.domain.model.Artwork
 import com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksViewModel
 import com.nightstalker.core.presentation.ext.handleContent
 import com.nightstalker.core.presentation.model.ContentResultState
-import kotlinx.android.synthetic.main.fragment_artwork_details.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -37,22 +34,19 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
         super.onViewCreated(view, savedInstanceState)
 
         initArtworkObserver()
-
         artworksListViewModel.loadArtworks()
 
         prepareSearch()
-
-        insertSearchWord()
+        insertSearchQuery()
         prepareAdapter()
     }
 
-    private fun insertSearchWord() = filterArtworksViewModel.queryWord.observe(viewLifecycleOwner) {
-        with(binding.tilSearch.editText) {
-            if (this?.text?.isEmpty() == true) {
-                this.setText(it)
+    private fun insertSearchQuery() =
+        filterArtworksViewModel.searchQuery.observe(viewLifecycleOwner) {
+            with(binding.tilSearch.editText) {
+                this?.setText(it)
             }
         }
-    }
 
     private fun prepareAdapter() = with(binding) {
         adapter = ArtworksListAdapter { id -> onItemClick(id) }
@@ -65,11 +59,10 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
         tilSearch.apply {
             editText?.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    val word = editText?.text.toString()
+                    val query = editText?.text.toString()
 
-                    filterArtworksViewModel.setQuery(word)
-                    filterArtworksViewModel.setQueryWord(word)
-
+                    filterArtworksViewModel.setSearchQuery(query)
+                    filterArtworksViewModel.getReadyQuery()
                     artworksListViewModel.getArtworksByQuery(filterArtworksViewModel.fullQuery.value.toString())
 
                     initObserversForSearchedArtworks()

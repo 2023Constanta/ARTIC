@@ -13,8 +13,6 @@ package com.nightstalker.artic.features.ticket.domain.model
  * @property shortDescription   краткое описание
  * @property numberOfPersons    на сколько персон билет
  * @property timestamp          время покупки билета
- *
- * @author Maxim Zimin
  */
 data class ExhibitionTicket(
     val id: Long = 0L,
@@ -28,5 +26,5 @@ data class ExhibitionTicket(
     val shortDescription: String = "",
     val numberOfPersons: Int = 1,
     val timestamp: Long = 0L,
-//    val comments: String = ""
+    val comments: String = ""
 )

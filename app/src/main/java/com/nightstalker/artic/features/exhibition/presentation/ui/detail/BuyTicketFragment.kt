@@ -12,6 +12,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 import com.nightstalker.artic.R
 import com.nightstalker.artic.databinding.FragmentBuyTicketBinding
+import com.nightstalker.artic.features.exhibition.data.mappers.toExhibitionTicket
 import com.nightstalker.artic.features.exhibition.domain.model.Exhibition
 import com.nightstalker.core.presentation.model.ContentResultState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -46,6 +47,11 @@ class BuyTicketFragment : Fragment(R.layout.fragment_buy_ticket) {
                         Toast.makeText(activity, "Данные не ок!", Toast.LENGTH_SHORT).show()
                     }
                 }
+                buyTicketViewModel.saveTicket(
+                    (contentResultState.content as Exhibition).toExhibitionTicket().copy(
+                        comments = "FDSFSFfFD"
+                    )
+                )
             }
         }
     }

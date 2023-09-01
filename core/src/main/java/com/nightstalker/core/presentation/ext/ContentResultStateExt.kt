@@ -2,6 +2,7 @@ package com.nightstalker.core.presentation.ext
 
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.constraintlayout.widget.Group
 import androidx.core.view.isVisible
 import com.nightstalker.core.databinding.LayoutErrorBinding
 import com.nightstalker.core.presentation.model.ContentResultState
@@ -49,6 +50,41 @@ fun ContentResultState.handleContent(
     onStateSuccess: SuccessStateAction,
     tryAgainAction: TryAgainAction? = null,
     viewToShow: ViewGroup,
+    progressBar: ProgressBar,
+    errorLayout: LayoutErrorBinding? = null,
+) = when (this) {
+
+    is ContentResultState.Content -> {
+        progressBar.isVisible = false
+        errorLayout?.root?.isVisible = false
+        viewToShow.isVisible = true
+
+        onStateSuccess.invoke(this.content)
+    }
+    is ContentResultState.Loading -> {
+        progressBar.isVisible = true
+        errorLayout?.root?.isVisible = false
+        viewToShow.isVisible = false
+    }
+    is ContentResultState.Error -> {
+        progressBar.isVisible = false
+        errorLayout?.root?.isVisible = true
+        viewToShow.isVisible = false
+
+        errorLayout?.apply {
+            textErrorTitle.setText(this@handleContent.error.title)
+            textErrorDescription.setText(this@handleContent.error.description)
+            btnErrorTryAgain.setOnClickListener {
+                tryAgainAction?.invoke()
+            }
+        }
+    }
+}
+
+fun ContentResultState.handleContent(
+    onStateSuccess: SuccessStateAction,
+    tryAgainAction: TryAgainAction? = null,
+    viewToShow: Group,
     progressBar: ProgressBar,
     errorLayout: LayoutErrorBinding? = null,
 ) = when (this) {

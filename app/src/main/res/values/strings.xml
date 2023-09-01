@@ -92,8 +92,8 @@
         <item>Испания</item>
     </string-array>
 
-    <string name="prompt_select_country">Select country</string>
-    <string name="prompt_select_type">Select type</string>
+    <string name="prompt_select_country">Выберете страну</string>
+    <string name="prompt_select_type">Выберете тип</string>
     <string name="error_wrong_qr">Неверный код!</string>
 
     <string name="btn_open_qr_details">Открыть</string>
@@ -103,5 +103,9 @@
     <string name="name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="buy_ticket">Купить билет</string>
+    <string name="info">Информация</string>
+    <string name="reset">Сброс</string>
+    <string name="tv_country">Страна</string>
+    <string name="tv_type">Тип</string>
 
 </resources>

@@ -41,9 +41,11 @@
         <item name="android:textColorPrimary">@color/white</item>
     </style>
 
-    <style name="SpinnerStyle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="SpinnerStyle" parent="Widget.AppCompat.Spinner">
+        <item name="android:spinnerMode">dialog</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">48dp</item>
     </style>
 
 
