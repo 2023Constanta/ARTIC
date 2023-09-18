@@ -5,6 +5,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import by.kirich1409.viewbindingdelegate.viewBinding
@@ -26,9 +28,12 @@ class BuyTicketFragment : Fragment(R.layout.fragment_buy_ticket) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        exhibitionsViewModel.exhibition.observe(viewLifecycleOwner, ::handle)
+        with(binding) {
+            tilFirstName.editText?.addTextChangedListener(textWatcher)
+            tilLastName.editText?.addTextChangedListener(textWatcher)
+        }
 
-        setupTilListeners()
+        exhibitionsViewModel.exhibition.observe(viewLifecycleOwner, ::handle)
     }
 
     private fun handle(contentResultState: ContentResultState) {
@@ -36,66 +41,47 @@ class BuyTicketFragment : Fragment(R.layout.fragment_buy_ticket) {
             with(binding) {
                 tvTicketInfo.text = "${(contentResultState.content as Exhibition).shortDescription}"
 
-                // После нажатия
+                    // После нажатия
                 btnApply.setOnClickListener {
-                    if (validateFirst() && validateLast()) {
-                        Toast.makeText(activity, "Данные ок!", Toast.LENGTH_SHORT).show()
-//                        val ticket =
-                        val ticketComment = "Имя: Джон \nФамилия: Вик \nЦена: $50"
-                        binding.tvTicketInfo.text = ticketComment
-                    } else {
-                        Toast.makeText(activity, "Данные не ок!", Toast.LENGTH_SHORT).show()
-                    }
-                }
-                buyTicketViewModel.saveTicket(
-                    (contentResultState.content as Exhibition).toExhibitionTicket().copy(
-                        comments = "FDSFSFfFD"
+                    buyTicketViewModel.saveTicket(
+                        (contentResultState.content as Exhibition).toExhibitionTicket().copy(
+                            comments = "FDSFSFfFD"
+                        )
                     )
-                )
+                }
+
             }
         }
     }
 
-    private fun setupTilListeners() = with(binding) {
-        tilFirstName.editText?.addTextChangedListener(TextFieldValidation(tilFirstName))
-        tilLastName.editText?.addTextChangedListener(TextFieldValidation(tilLastName))
-    }
 
-    private fun validateName(textInputLayout: TextInputLayout, errorMsg: String): Boolean = with(textInputLayout) {
-        if (editText?.text.toString().trim().isBlank()) {
-            this.error = errorMsg
-            this.requestFocus()
-            false
-        } else {
-            this.isErrorEnabled = false
+    val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+//            binding.btnApply.isEnabled = false
+            val name = binding.tilFirstName.editText?.text.toString().trim()
+            val surname = binding.tilLastName.editText?.text.toString().trim()
+
+            binding.btnApply.isEnabled = name.isNotEmpty() && surname.isNotEmpty()
         }
-        true
-    }
 
-    private fun validateFirst(): Boolean = validateName(binding.tilFirstName, "Введите имя!")
-
-    private fun validateLast(): Boolean = validateName(binding.tilLastName, "Введите фамилию!")
-
-    inner class TextFieldValidation(private val view: View) : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            // checking ids of each text field and applying functions accordingly.
-            when(view.id) {
-                R.id.tilFirstName -> {
-                    validateFirst()
-                }
-                R.id.tilLastName -> {
-                    validateLast()
-                }
-            }
+//            binding.btnApply.isEnabled = false
+            val name = binding.tilFirstName.editText?.text.toString().trim()
+            val surname = binding.tilLastName.editText?.text.toString().trim()
+
+            binding.btnApply.isEnabled = name.isNotEmpty() && surname.isNotEmpty()
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+
         }
 
     }
-
     companion object {
         private const val TAG = "BuyTicket"
     }
 
 
 }
+

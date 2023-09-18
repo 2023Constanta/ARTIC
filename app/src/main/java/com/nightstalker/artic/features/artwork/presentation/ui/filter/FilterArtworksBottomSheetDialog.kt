@@ -36,6 +36,7 @@ class FilterArtworksBottomSheetDialog :
         with(filterArtworksViewModel) {
             numberOfArtworks.observe(viewLifecycleOwner, ::handleFilteredCount)
             getNumberOfArtworks()
+
         }
 
         restorePositions()
@@ -85,8 +86,11 @@ class FilterArtworksBottomSheetDialog :
         }
 
         btnReset.setOnClickListener {
+//            filterArtworksViewModel.getNumberOfArtworks()
             filterArtworksViewModel.resetQuery()
-            filterArtworksViewModel.getNumberOfArtworks()
+
+            spCountries.setSelection(0)
+            spTypes.setSelection(0)
         }
 
     }
@@ -119,7 +123,7 @@ class FilterArtworksBottomSheetDialog :
     }
 
     companion object {
-        private const val TAG = "FilterArtworks"
+        private const val TAG = "FilterArtworksDialog"
     }
 
 }
