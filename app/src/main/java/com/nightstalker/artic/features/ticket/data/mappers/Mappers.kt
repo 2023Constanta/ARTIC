@@ -25,6 +25,7 @@ fun ExhibitionTicket.toLocalTicket(): TicketEntity =
         shortDescription = shortDescription,
         numberOfPersons = numberOfPersons,
         timestamp = timestamp,
+        comments = comments
     )
 
 fun ExhibitionTicket.toCalendarEvent(): Map<String, String> = mapOf(
@@ -56,4 +57,5 @@ fun TicketEntity.toExhibitionTicket(): ExhibitionTicket =
         shortDescription = shortDescription,
         numberOfPersons = numberOfPersons,
         timestamp = timestamp,
+        comments = comments
     )

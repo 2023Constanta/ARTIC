@@ -7,6 +7,9 @@ import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 
+typealias OnItemSelectedAction = (position: Int) -> Unit
+typealias OnNothingSelectedAction = () -> Unit
+
 /**
  * Фукнция, которая работает с выбранным элементом [Spinner]
  *
@@ -30,15 +33,22 @@ fun Spinner.setupAdapter(values: MutableList<String>, context: Context) {
     )
 }
 
-fun Spinner.setupOnItemSelectedListener(action1: (pos: Int) -> Unit, action2: () -> Unit) {
+fun Spinner.setupOnItemSelectedListener(
+    onItemSelectedAction: OnItemSelectedAction,
+    onNothingSelectedAction: OnNothingSelectedAction? = null
+) {
+
+    val currentPosition = this.selectedItemPosition
 
     this.onItemSelectedListener = object : OnItemSelectedListener {
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            action1(position)
+            if (currentPosition != position) {
+                onItemSelectedAction(position)
+            }
         }
 
         override fun onNothingSelected(parent: AdapterView<*>?) {
-            action2.invoke()
+            onNothingSelectedAction?.invoke()
         }
 
     }

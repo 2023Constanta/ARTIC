@@ -8,13 +8,17 @@ import com.nightstalker.artic.features.ApiConstants.PLACE_OF_ORIGIN
  * @author Tamerlan Mamukhov on 2022-11-15
  */
 object SearchArtworksQueryConstructor {
-    fun create(
-        searchQuery: String,
-        place: String = "United States",
-        type: String = "Painting",
+
+    private val stringBuilder = StringBuilder()
+
+    fun createQuery(
+        searchQuery: String = "",
+        place: String = "",
+        type: String = "",
     ): String {
-        val params = StringBuilder()
-        params.apply {
+
+        stringBuilder.apply {
+            clear()
             append(LEFT_CURLY_BRACE)
             if (searchQuery.isNotEmpty()) {
                 append(createQueryPath(searchQuery))
@@ -32,13 +36,16 @@ object SearchArtworksQueryConstructor {
             append(RIGHT_BRACE)
             append(THREE_RIGHT_CURLY_BRACES)
         }
-        return params.toString()
+        return stringBuilder.toString()
     }
 
     private fun createQueryPath(searchQuery: String) = "\"q\":\"$searchQuery\""
 
     private fun createQueryMatchPart(field: String, value: String) =
         "{ \"match\": { \"$field\": \"$value\" } }"
+
+    private const val DEFAULT_COUNTRY = "United States"
+    private const val DEFAULT_TYPE = "Painting"
 
     private const val QUERY_BOOL_SHOULD = "\"query\": {\"bool\": {\"should\":"
 

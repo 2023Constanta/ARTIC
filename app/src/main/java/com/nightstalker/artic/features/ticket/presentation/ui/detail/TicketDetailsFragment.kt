@@ -2,6 +2,7 @@ package com.nightstalker.artic.features.ticket.presentation.ui.detail
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
@@ -20,6 +21,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
+
     private val args: TicketDetailsFragmentArgs by navArgs()
     private val binding: FragmentTicketDetailsBinding by viewBinding(FragmentTicketDetailsBinding::bind)
     private val ticketViewModel by viewModel<TicketDetailsViewModel>()
@@ -68,6 +70,7 @@ class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
 
     private fun setViewForTicket(ticket: ExhibitionTicket) = with(binding) {
         ticketViewModel.saveUndoTicket(ticket)
+        Log.d(TAG, "setViewForTicket: $ticket")
 
         titleTextView.text = ticket.title
         exhibitionIdTextView.text = ticket.galleryTitle
@@ -95,5 +98,9 @@ class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
         addCalendarEventButton.setOnClickListener {
             (activity as MainActivity).addCalendarEvent(ticket.toCalendarEvent())
         }
+    }
+
+    companion object {
+        private const val TAG = "TicketDetails"
     }
 }

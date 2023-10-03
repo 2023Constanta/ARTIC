@@ -30,6 +30,14 @@ suspend fun onResultStateSuccess(
     contentResultState.postValue(ContentResultState.Content(content = content))
 }
 
+suspend fun onResultStateSuccess(
+    ioDispatcher: CoroutineDispatcher,
+    content: Any? = null,
+    contentResultState: MutableLiveData<ContentResultState>,
+) = withContext(ioDispatcher) {
+    contentResultState.postValue(ContentResultState.Content(content = content))
+}
+
 /**
  * Выполняет действие при неуспешном исходе
  *
@@ -41,6 +49,15 @@ suspend fun onResultStateError(
     contentResultState: MutableLiveData<ContentResultState>
 ) =
     withContext(Dispatchers.Main) {
+        contentResultState.value = ContentResultState.Error(error = isNetworkError.parseError())
+    }
+
+suspend fun onResultStateError(
+    mainDispatcher: CoroutineDispatcher,
+    isNetworkError: Boolean,
+    contentResultState: MutableLiveData<ContentResultState>
+) =
+    withContext(mainDispatcher) {
         contentResultState.value = ContentResultState.Error(error = isNetworkError.parseError())
     }
 
@@ -68,6 +85,31 @@ fun ViewModel.viewModelCall(
 
         is ResultState.Error -> contentResultState?.let {
             onResultStateError(
+                isNetworkError = resultState.errorData,
+                contentResultState = it
+            )
+        }
+    }
+}
+
+fun ViewModel.viewModelCall(
+    ioDispatcher: CoroutineDispatcher,
+    mainDispatcher: CoroutineDispatcher,
+    call: suspend () -> Any,
+    contentResultState: MutableLiveData<ContentResultState>? = null,
+) = viewModelScope.launch(ioDispatcher) {
+    when (val resultState = call.invoke()) {
+        is ResultState.Success<*> -> contentResultState?.let {
+            onResultStateSuccess(
+                ioDispatcher,
+                resultState.data,
+                contentResultState = it
+            )
+        }
+
+        is ResultState.Error -> contentResultState?.let {
+            onResultStateError(
+                mainDispatcher,
                 isNetworkError = resultState.errorData,
                 contentResultState = it
             )

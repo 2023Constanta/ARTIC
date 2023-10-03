@@ -1,6 +1,7 @@
 package com.nightstalker.artic
 
 import android.app.Application
+import com.nightstalker.artic.core.data.di.dispatchersModule
 import com.nightstalker.artic.features.artwork.di.artworkModules
 import com.nightstalker.artic.features.audio.di.audioModules
 import com.nightstalker.artic.features.di.databaseModule

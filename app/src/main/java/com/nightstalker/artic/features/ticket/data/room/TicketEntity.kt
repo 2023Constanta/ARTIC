@@ -42,6 +42,6 @@ data class TicketEntity(
     val numberOfPersons: Int = 1,
     @ColumnInfo(name = "timestamp")
     val timestamp: Long = Date().time,
-//    @ColumnInfo(name = "comments")
-//    val comments: String = ""
+    @ColumnInfo(name = "comments")
+    val comments: String = ""
 )
