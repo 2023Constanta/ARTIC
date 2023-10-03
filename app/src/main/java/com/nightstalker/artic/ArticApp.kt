@@ -1,9 +1,14 @@
 package com.nightstalker.artic
 
 import android.app.Application
-import com.nightstalker.artic.core.data.di.dispatchersModule
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.nightstalker.artic.features.artwork.di.artworkModules
 import com.nightstalker.artic.features.audio.di.audioModules
+import com.nightstalker.artic.features.audio.domain.service.NewAudioPlayerService
 import com.nightstalker.artic.features.di.databaseModule
 import com.nightstalker.artic.features.di.networkModule
 import com.nightstalker.artic.features.exhibition.di.exhibitionModules
@@ -17,6 +22,10 @@ class ArticApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
 
         startKoin {
             androidContext(this@ArticApp)
@@ -36,4 +45,15 @@ class ArticApp : Application() {
         stopKoin()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun createNotificationChannel() {
+        val audioChannel = NotificationChannel(
+            NewAudioPlayerService.CHANNEL_AUDIO_PLAYER,
+            "Running audio!",
+            NotificationManager.IMPORTANCE_HIGH
+        )
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(audioChannel)
+
+    }
 }
