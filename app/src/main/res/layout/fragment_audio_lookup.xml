@@ -8,8 +8,8 @@
     android:padding="16dp"
     tools:context=".features.audio.presentation.ui.AudioLookupFragment">
 
-    <Button
-        android:id="@+id/header"
+    <TextView
+        android:id="@+id/tvSearchAudio"
         style="@style/ListItemsTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintTop_toBottomOf="@id/tvSearchAudio"
         app:startIconDrawable="@android:drawable/stat_sys_headset">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -40,9 +40,38 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <androidx.constraintlayout.helper.widget.Flow
+        android:id="@+id/flowPlayerControls"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        app:constraint_referenced_ids="playerPlay, playerPause, playerStop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilAudioNumber" />
+
+    <Button
+        android:id="@+id/playerPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Play" />
+
+    <Button
+        android:id="@+id/playerPause"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pause" />
+
+    <Button
+        android:id="@+id/playerStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Stop" />
 
     <androidx.core.widget.NestedScrollView
-        android:id="@+id/playerArea"
+        android:id="@+id/audioTextArea"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
@@ -52,34 +81,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tilAudioNumber">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/audioDescription"
+            style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@tools:sample/lorem" />
 
-            <com.google.android.exoplayer2.ui.PlayerView
-                android:id="@+id/audioPlayer"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                app:auto_show="true"
-                app:controller_layout_id="@layout/exo_playback_control_view"
-                app:hide_on_touch="false"
-                app:show_timeout="0"
-                app:use_artwork="false"
-                app:use_controller="true" />
-
-            <TextView
-                android:id="@+id/audioDescription"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/black"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="@tools:sample/lorem" />
-
-        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

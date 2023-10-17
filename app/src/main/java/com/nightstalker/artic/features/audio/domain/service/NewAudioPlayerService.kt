@@ -13,15 +13,14 @@ import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
-import com.google.android.exoplayer2.util.NotificationUtil
 import com.nightstalker.artic.R
-import com.nightstalker.artic.features.audio.player.AudioPlayerService
-import java.io.Serializable
 
 class NewAudioPlayerService : Service() {
 
-    val player: ExoPlayer by lazy { ExoPlayer.Builder(this).build() }
+    private val player: ExoPlayer by lazy { ExoPlayer.Builder(this).build() }
+
     private lateinit var playerNotificationManager: PlayerNotificationManager
+    private lateinit var audioInfo: AudioInfo
 
     override fun onCreate() {
         super.onCreate()
@@ -32,17 +31,18 @@ class NewAudioPlayerService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         when (intent?.action) {
-            Actions.START.toString() -> {
-                val audioInfo = intent.getSerializableExtra(INTENT_EXTRA) as AudioInfo
+            PlayerActions.START.toString() -> {
+                audioInfo = intent.getSerializableExtra(INTENT_EXTRA) as AudioInfo
                 start(audioInfo)
-                Log.d(TAG, "onStartCommand: $audioInfo")
             }
-            Actions.STOP.toString() -> stopSelf()
+            PlayerActions.PAUSE.toString() -> pause()
+            PlayerActions.STOP.toString() -> stopSelf()
         }
         return super.onStartCommand(intent, flags, startId)
     }
 
     private fun start(audioInfo: AudioInfo) {
+        if (player.isPlaying) return
         val notification = NotificationCompat.Builder(this, CHANNEL_AUDIO_PLAYER)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(audioInfo.name)
@@ -58,6 +58,8 @@ class NewAudioPlayerService : Service() {
 
         startForeground(NOTIFICATION_ID, notification)
     }
+
+    private fun pause() = player.pause()
 
     private fun setupNotificationManager() {
         playerNotificationManager = PlayerNotificationManager.Builder(
@@ -78,7 +80,7 @@ class NewAudioPlayerService : Service() {
     private val mediaDescriptionAdapter =
         object : PlayerNotificationManager.MediaDescriptionAdapter {
             override fun getCurrentContentTitle(player: Player): CharSequence {
-                return "Test"
+                return audioInfo.name.toString()
             }
 
             override fun createCurrentContentIntent(player: Player): PendingIntent? {
@@ -112,8 +114,8 @@ class NewAudioPlayerService : Service() {
         }
     }
 
-    enum class Actions {
-        START, STOP
+    enum class PlayerActions {
+        START, PAUSE, STOP
     }
 
     companion object {
@@ -123,10 +125,3 @@ class NewAudioPlayerService : Service() {
         const val TAG = "NewAudioService"
     }
 }
-
-class AudioInfo(val name: String? = null, val audioId: String) : Serializable {
-    override fun toString(): String {
-        return "AudioInfo(audioId='$audioId', name=$name)"
-    }
-}
-
