@@ -33,14 +33,20 @@ class ArtworksListViewModel(
         }
     }
 
-    fun getArtworks() =
+    fun getArtworks() {
+        _artworksContentState.value = ContentResultState.Loading
+
         viewModelCall(
 //            ioDispatcher = ioDispatcher,
 //            mainDispatcher = mainDispatcher,
-            call = { useCase.getArtworks() },
+            call = {
+
+                useCase.getArtworks()
+                   },
             contentResultState = _artworksContentState
         )
 
+    }
     // Получение экспонатов по запросу
     fun getArtworksByQuery(query: String) =
         viewModelCall(
