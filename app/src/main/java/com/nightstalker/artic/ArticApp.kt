@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.nightstalker.artic.core.data.di.dispatchersModule
 import com.nightstalker.artic.features.artwork.di.artworkModules
 import com.nightstalker.artic.features.audio.di.audioModules
 import com.nightstalker.artic.features.audio.domain.service.NewAudioPlayerService
@@ -29,6 +30,7 @@ class ArticApp : Application() {
 
         startKoin {
             androidContext(this@ArticApp)
+            modules(dispatchersModule)
             modules(artworkModules)
             modules(exhibitionModules)
             modules(ticketModules)

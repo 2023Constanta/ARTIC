@@ -14,6 +14,7 @@ import com.nightstalker.artic.features.ApiConstants
 import com.nightstalker.artic.features.qrcode.QrCodeGenerator
 import com.nightstalker.artic.features.ticket.data.mappers.toCalendarEvent
 import com.nightstalker.artic.features.ticket.domain.model.ExhibitionTicket
+import com.nightstalker.artic.features.wip.newFuncForHandling
 import com.nightstalker.core.presentation.ext.handleContent
 import com.nightstalker.core.presentation.ext.primitives.reformatIso8601
 import com.nightstalker.core.presentation.model.ContentResultState
@@ -39,7 +40,7 @@ class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
         deleteTicketButton.setOnClickListener {
 
             ticketViewModel.deleteTicket(
-                ticketId =  args.ticketId.toLong(),
+                ticketId = args.ticketId.toLong(),
                 exhibitionId = arguments?.getInt(ApiConstants.BUNDLE_EXHIBITION_ID).toString()
             )
 
@@ -58,15 +59,15 @@ class TicketDetailsFragment : Fragment(R.layout.fragment_ticket_details) {
         }
     }
 
-    private fun handleTicket(contentResultState: ContentResultState) =
-        contentResultState.handleContent(
-            viewToShow = binding.content,
-            progressBar = binding.progressBar,
-            onStateSuccess = {
+    private fun handleTicket(contentResultState: ContentResultState) = with(binding) {
+        contentResultState.newFuncForHandling(
+            {
                 setViewForTicket(it as ExhibitionTicket)
-            }
+            },
+            viewToShow = ticketDetContent,
+            errorPanelBinding = errorPanele
         )
-
+    }
 
     private fun setViewForTicket(ticket: ExhibitionTicket) = with(binding) {
         ticketViewModel.saveUndoTicket(ticket)

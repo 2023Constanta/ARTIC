@@ -15,7 +15,7 @@ import kotlinx.coroutines.CoroutineDispatcher
  */
 class ArtworksListViewModel(
     private val useCase: ArtworksUseCase,
-//    private val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher,
 //    private val mainDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
@@ -37,12 +37,8 @@ class ArtworksListViewModel(
         _artworksContentState.value = ContentResultState.Loading
 
         viewModelCall(
-//            ioDispatcher = ioDispatcher,
-//            mainDispatcher = mainDispatcher,
-            call = {
-
-                useCase.getArtworks()
-                   },
+            dispatcher = ioDispatcher,
+            call = { useCase.getArtworks() },
             contentResultState = _artworksContentState
         )
 
@@ -50,8 +46,7 @@ class ArtworksListViewModel(
     // Получение экспонатов по запросу
     fun getArtworksByQuery(query: String) =
         viewModelCall(
-//            ioDispatcher = ioDispatcher,
-//            mainDispatcher = mainDispatcher,
+            dispatcher = ioDispatcher,
             call = { useCase.getArtworksByQuery(query) },
             contentResultState = _artworksContentState
         )

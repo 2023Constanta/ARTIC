@@ -10,6 +10,7 @@ import com.nightstalker.artic.R
 import com.nightstalker.artic.core.presentation.ext.ui.setDivider
 import com.nightstalker.artic.databinding.FragmentTicketsListBinding
 import com.nightstalker.artic.features.ticket.domain.model.ExhibitionTicket
+import com.nightstalker.artic.features.wip.newFuncForHandling
 import com.nightstalker.core.presentation.ext.handleContent
 import com.nightstalker.core.presentation.model.ContentResultState
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,14 +48,16 @@ class TicketsListFragment : Fragment(R.layout.fragment_tickets_list) {
         ticketsViewModel.ticketsContent.observe(viewLifecycleOwner, ::handleTickets)
     }
 
-    private fun handleTickets(contentResultState: ContentResultState) =
-        contentResultState.handleContent(
-            viewToShow = binding.content,
-            progressBar = binding.progressBar,
-            onStateSuccess = {
+    private fun handleTickets(contentResultState: ContentResultState) = with(binding) {
+        contentResultState.newFuncForHandling(
+            successStateAction = {
                 adapter.setData(it as List<ExhibitionTicket>)
-            }
+            },
+            viewToShow = rvTickets,
+            errorPanelBinding = errorPanele
         )
+    }
+
 
     private fun onItemClicked(id: Long) {
         TicketsListFragmentDirections
