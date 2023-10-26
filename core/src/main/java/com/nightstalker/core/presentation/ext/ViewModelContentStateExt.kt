@@ -23,14 +23,14 @@ import kotlinx.coroutines.withContext
  * @param content               контент, который надо положить
  * @param contentResultState    обертка данных [ContentResultState]
  */
-suspend fun onResultStateSuccess(
+private suspend fun onResultStateSuccess(
     content: Any? = null,
     contentResultState: MutableLiveData<ContentResultState>,
 ) = withContext(Dispatchers.IO) {
     contentResultState.postValue(ContentResultState.Content(content = content))
 }
 
-suspend fun onResultStateSuccess(
+private suspend fun onResultStateSuccess(
     ioDispatcher: CoroutineDispatcher,
     content: Any? = null,
     contentResultState: MutableLiveData<ContentResultState>,
@@ -44,7 +44,7 @@ suspend fun onResultStateSuccess(
  * @param isNetworkError        сетевая ли ошибка
  * @param contentResultState    обертка данных [ContentResultState]
  */
-suspend fun onResultStateError(
+private suspend fun onResultStateError(
     isNetworkError: Boolean,
     contentResultState: MutableLiveData<ContentResultState>
 ) =
@@ -52,7 +52,7 @@ suspend fun onResultStateError(
         contentResultState.value = ContentResultState.Error(error = isNetworkError.parseError())
     }
 
-suspend fun onResultStateError(
+private suspend fun onResultStateError(
     mainDispatcher: CoroutineDispatcher,
     isNetworkError: Boolean,
     contentResultState: MutableLiveData<ContentResultState>

@@ -11,23 +11,14 @@ import org.koin.dsl.module
 
 val artworkPresentationModule = module {
 
-//    single(named("IODisp")) {
-//        Dispatchers.IO
-//    }
     viewModel { ArtworkDetailsViewModel(useCase = get(), ioDispatcher = get(named(Constants.DISPATCHER_IO)),) }
     viewModel {
         ArtworksListViewModel(
             useCase = get(),
             ioDispatcher = get(named(Constants.DISPATCHER_IO)),
-//            mainDispatcher = get(named(Constants.DISPATCHER_MAIN))
+            mainDispatcher = get(named(Constants.DISPATCHER_MAIN))
         )
     }
-//    viewModel {
-//        ArtworksListViewModel(
-//            useCase = get(),
-//            ioDispatcher = get(named(Constants.DISPATCHER_IO)),
-//            mainDispatcher = get(named(Constants.DISPATCHER_MAIN))
-//        )
-//    }
+
     viewModel { FilterArtworksViewModel(useCase = get()) }
 }
