@@ -10,6 +10,7 @@ import com.nightstalker.artic.features.ticket.domain.model.ExhibitionTicket
 import com.nightstalker.core.domain.model.safeCall
 import com.nightstalker.core.presentation.ext.viewModelCall
 import com.nightstalker.core.presentation.model.ContentResultState
+import kotlinx.coroutines.CoroutineDispatcher
 
 
 /**
@@ -17,7 +18,10 @@ import com.nightstalker.core.presentation.model.ContentResultState
  * @author Maxim Zimin
  * @created 2022-10-13
  */
-class TicketDetailsViewModel(private val dao: TicketDao) : ViewModel() {
+class TicketDetailsViewModel(
+    private val dao: TicketDao,
+    private val ioDispatcher: CoroutineDispatcher
+    ) : ViewModel() {
     private val _ticket = MutableLiveData<ContentResultState>()
     val ticket: LiveData<ContentResultState> get() = _ticket
 

@@ -5,11 +5,11 @@
     android:id="@+id/nav_main"
     app:startDestination="@id/artworksListFragment">
 
-    <dialog
+    <fragment
         android:id="@+id/filterArtworksBottomSheetDialog"
-        android:name="com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksBottomSheetDialog"
+        android:name="com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksFragment"
         android:label="fragment_filter_artworks_bottom_sheet_dialog"
-        tools:layout="@layout/fragment_filter_artworks_bottom_sheet_dialog" />
+        tools:layout="@layout/fragment_filter_artworks" />
     <fragment
         android:id="@+id/artworkDetailsFragment"
         android:name="com.nightstalker.artic.features.artwork.presentation.ui.detail.ArtworkDetailsFragment"

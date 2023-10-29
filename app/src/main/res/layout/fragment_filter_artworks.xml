@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".features.artwork.presentation.ui.filter.FilterArtworksBottomSheetDialog">
+    tools:context=".features.artwork.presentation.ui.filter.FilterArtworksFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/glStart"
@@ -76,20 +75,20 @@
         app:layout_constraintStart_toStartOf="@id/glStart" />
 
     <androidx.constraintlayout.widget.Group
-        android:layout_width="wrap_content"
-        android:visibility="visible"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="tvCountry, spCountries, tvTypes, spTypes, btnReset, btnApply"
-        android:id="@+id/group"/>
+        android:id="@+id/group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:constraint_referenced_ids="tvCountry, spCountries, tvTypes, spTypes, btnReset, btnApply" />
 
-        <ProgressBar
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+    <include
+        android:id="@+id/errorPanel"
+        layout="@layout/error_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

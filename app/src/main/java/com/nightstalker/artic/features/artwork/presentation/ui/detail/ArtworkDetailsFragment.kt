@@ -1,19 +1,20 @@
 package com.nightstalker.artic.features.artwork.presentation.ui.detail
 
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import by.kirich1409.viewbindingdelegate.viewBinding
 import coil.load
+import com.nightstalker.artic.R
 import com.nightstalker.artic.databinding.FragmentArtworkDetailsBinding
 import com.nightstalker.artic.features.ImageLinkCreator
 import com.nightstalker.artic.features.artwork.domain.model.Artwork
 import com.nightstalker.artic.features.artwork.domain.model.ArtworkInformation
-import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.artic.features.wip.newFuncForHandling
 import com.nightstalker.core.presentation.model.ContentResultState
-import com.nightstalker.core.presentation.ui.ViewBindingFragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -21,17 +22,18 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
  * @author Tamerlan Mamukhov
  * @created 2022-09-18
  */
-class ArtworkDetailsFragment : ViewBindingFragment<FragmentArtworkDetailsBinding>() {
+class ArtworkDetailsFragment : Fragment(R.layout.fragment_artwork_details) {
 
+    private val binding: FragmentArtworkDetailsBinding by viewBinding(FragmentArtworkDetailsBinding::bind)
     private val args: ArtworkDetailsFragmentArgs by navArgs()
-
-    override val initBinding: (inflater: LayoutInflater, container: ViewGroup?, attachToRoot: Boolean) -> FragmentArtworkDetailsBinding
-        get() = FragmentArtworkDetailsBinding::inflate
-
     private val artworkViewModel: ArtworkDetailsViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.errorPanele.btnTry.setOnClickListener {
+            tryAgain()
+        }
         initObserver()
 
         args.posterId.run {
@@ -45,25 +47,28 @@ class ArtworkDetailsFragment : ViewBindingFragment<FragmentArtworkDetailsBinding
         artworkDescriptionState.observe(viewLifecycleOwner, ::handleResult)
     }
 
-    private fun handleResult(contentResultState: ContentResultState) = withSafeBinding {
-        contentResultState.handleContent(
-            viewToShow = content,
-            progressBar = progressBar,
-            onStateSuccess = {
+    private fun handleResult(contentResultState: ContentResultState) = with(binding) {
+        contentResultState.newFuncForHandling(
+            successStateAction = {
                 when (it) {
-                    is Artwork -> setArtworkViews(it)
+                    is Artwork -> {
+                        Log.d(TAG, "handleResult: $it")
+                        setArtworkViews(it)
+                    }
                     is ArtworkInformation -> setDescriptionView(it)
                 }
             },
-            errorLayout = errorLayout
+            viewToShow = artDetailsContent,
+            errorPanelBinding = errorPanele
         )
+
     }
 
-    private fun setDescriptionView(artworkInformation: ArtworkInformation) = withSafeBinding {
+    private fun setDescriptionView(artworkInformation: ArtworkInformation) = with(binding) {
         tvDescription.text = artworkInformation.description
     }
 
-    private fun setArtworkViews(artwork: Artwork) = withSafeBinding {
+    private fun setArtworkViews(artwork: Artwork) = with(binding) {
         titleTextView.text = artwork.title
         tvAuthor.text = artwork.artist
 
@@ -78,10 +83,14 @@ class ArtworkDetailsFragment : ViewBindingFragment<FragmentArtworkDetailsBinding
                     )
                 }.run {
                     this?.let { dir -> findNavController().navigate(dir) }
-                    }
                 }
             }
         }
+    }
+
+    private fun tryAgain() {
+        artworkViewModel.loadAgain(args.posterId)
+    }
 
 
     companion object {

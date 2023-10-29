@@ -11,7 +11,7 @@ val dispatchersModule = module {
         Dispatchers.IO
     }
 
-    single(named(Constants.DISPATCHER_MAIN)) {
+    single<CoroutineDispatcher>(named(Constants.DISPATCHER_MAIN)) {
         Dispatchers.Main
     }
 }

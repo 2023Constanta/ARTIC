@@ -13,7 +13,7 @@ import com.nightstalker.artic.core.presentation.ext.ui.setup
 import com.nightstalker.artic.databinding.FragmentArtworksListBinding
 import com.nightstalker.artic.features.artwork.domain.model.Artwork
 import com.nightstalker.artic.features.artwork.presentation.ui.filter.FilterArtworksViewModel
-import com.nightstalker.core.presentation.ext.handleContent
+import com.nightstalker.artic.features.wip.newFuncForHandling
 import com.nightstalker.core.presentation.model.ContentResultState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,6 +33,7 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.errorPanele.btnTry.setOnClickListener { tryAgain() }
         initArtworkObserver()
         artworksListViewModel.loadArtworks()
 
@@ -59,9 +60,7 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
         tilSearch.apply {
             editText?.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    val query = editText?.text.toString()
-
-                    filterArtworksViewModel.setSearchQuery(query)
+                    filterArtworksViewModel.setSearchQuery(editText?.text.toString())
                     filterArtworksViewModel.getReadyQuery()
                     artworksListViewModel.getArtworksByQuery(filterArtworksViewModel.fullQuery.value.toString())
 
@@ -92,16 +91,17 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
         )
 
     private fun handleArtworks(contentResultState: ContentResultState) = with(binding) {
-        contentResultState.handleContent(
-            onStateSuccess = {
+        contentResultState.newFuncForHandling(
+            successStateAction = {
                 adapter.setData(it as List<Artwork>)
             },
-            tryAgainAction = {
-                artworksListViewModel.getArtworks()
-            },
-            viewToShow = content,
-            errorView = errare
+            viewToShow = artListContent,
+            errorPanelBinding = errorPanele
         )
+    }
+
+    private fun tryAgain() {
+        artworksListViewModel.getArtworks()
     }
 
     private fun onItemClick(id: Int) = ArtworksListFragmentDirections.toArtworkDetailsFragment(id)

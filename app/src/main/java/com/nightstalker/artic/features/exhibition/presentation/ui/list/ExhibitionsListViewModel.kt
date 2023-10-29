@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.nightstalker.artic.features.exhibition.domain.usecase.ExhibitionsUseCase
 import com.nightstalker.core.presentation.ext.viewModelCall
 import com.nightstalker.core.presentation.model.ContentResultState
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
  * Вью модель для получения экспонатов
@@ -13,20 +14,24 @@ import com.nightstalker.core.presentation.model.ContentResultState
  * @author Tamerlan Mamukhov on 2022-09-17
  */
 class ExhibitionsListViewModel(
-    private val useCase: ExhibitionsUseCase
+    private val useCase: ExhibitionsUseCase,
+    private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private var _exhibitionsContentState =
+    private var _exhibitions =
         MutableLiveData<ContentResultState>(ContentResultState.Loading)
-    val exhibitionsContentState get() = _exhibitionsContentState
+    val exhibitions get() = _exhibitions
 
-    fun getExhibitions() = viewModelCall(
-        call = { useCase.getExhibitions() },
-        contentResultState = _exhibitionsContentState
-    )
+    fun getExhibitions() {
+        viewModelCall(
+            dispatcher = ioDispatcher,
+            call = { useCase.getExhibitions() },
+            contentResultState = _exhibitions
+        )
+    }
 
     fun loadExhibitions() {
-        if (_exhibitionsContentState.value is ContentResultState.Loading) {
+        if (_exhibitions.value is ContentResultState.Loading) {
             getExhibitions()
         }
     }

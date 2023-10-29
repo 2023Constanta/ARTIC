@@ -7,26 +7,27 @@
     android:padding="16dp"
     tools:context=".features.artwork.presentation.ui.detail.ArtworkDetailsFragment">
 
+    <include
+        android:id="@+id/errorPanele"
+        layout="@layout/error_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            android:layout_height="match_parent">
 
-            <include
-                android:id="@+id/error_layout"
-                layout="@layout/layout_error"
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/artDetailsContent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:constraint_referenced_ids="titleTextView, tvAuthor, tvCountryAndMore, tvDescription, ivImage" />
 
             <TextView
                 android:id="@+id/titleTextView"
@@ -97,14 +98,7 @@
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="visible" />
 </FrameLayout>
