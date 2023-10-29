@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.nightstalker.artic.features.artwork.domain.usecase.ArtworksUseCase
 import com.nightstalker.core.presentation.ext.viewModelCall
 import com.nightstalker.core.presentation.model.ContentResultState
+import kotlinx.coroutines.CoroutineDispatcher
 
 /**
  * [ViewModel] для поиска экспонатов
@@ -14,7 +15,9 @@ import com.nightstalker.core.presentation.model.ContentResultState
  * @author Tamerlan Mamukhov on 2022-11-15
  */
 class FilterArtworksViewModel(
-    private val useCase: ArtworksUseCase
+    private val useCase: ArtworksUseCase,
+    private val ioDispatcher: CoroutineDispatcher,
+    private val mainDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
     private val _numberOfArtworks = MutableLiveData<ContentResultState>()
@@ -50,7 +53,10 @@ class FilterArtworksViewModel(
         }
         Log.d(TAG, "getNumberOfArtworks after: $searchQuery")
 
+        _numberOfArtworks.value = ContentResultState.Loading
         viewModelCall(
+            ioDispatcher = ioDispatcher,
+            mainDispatcher = mainDispatcher,
             call = { useCase.getNumber(searchQuery) },
             contentResultState = _numberOfArtworks
         )
@@ -61,7 +67,10 @@ class FilterArtworksViewModel(
         val searchQuery = SearchArtworksQueryConstructor.createQuery("null", "null")
         Log.d(TAG, "resetQuery: $searchQuery")
         _fullQuery.value = searchQuery
+        _numberOfArtworks.value = ContentResultState.Loading
         viewModelCall(
+            ioDispatcher = ioDispatcher,
+            mainDispatcher = mainDispatcher,
             call = { useCase.getNumber(searchQuery) },
             contentResultState = _numberOfArtworks
         )
@@ -84,7 +93,7 @@ class FilterArtworksViewModel(
         _fullQuery.value = searchQuery
     }
 
-    private fun getCountry() : String {
+    private fun getCountry(): String {
         return _country.value.toString()
     }
 
@@ -92,7 +101,7 @@ class FilterArtworksViewModel(
         return _type.value.toString()
     }
 
-    private fun getRawSearchQuery() : String {
+    private fun getRawSearchQuery(): String {
         return _searchQuery.value.orEmpty()
     }
 

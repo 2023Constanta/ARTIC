@@ -29,6 +29,7 @@ class ExhibitionsListFragment : Fragment(R.layout.fragment_exhibitions_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.errorPanele.btnTry.setOnClickListener { viewModel.getExhibitions() }
         initObserver()
         viewModel.loadExhibitions()
         prepareAdapter()
@@ -42,7 +43,7 @@ class ExhibitionsListFragment : Fragment(R.layout.fragment_exhibitions_list) {
         }
 
     private fun initObserver() = with(viewModel) {
-        exhibitionsContentState.observe(viewLifecycleOwner, ::setExhibitions)
+        exhibitions.observe(viewLifecycleOwner, ::setExhibitions)
     }
 
     private fun setExhibitions(contentResultState: ContentResultState) = with(binding) {
@@ -61,7 +62,4 @@ class ExhibitionsListFragment : Fragment(R.layout.fragment_exhibitions_list) {
             .toExhibitionDetailsFragment(id)
             .run { findNavController().navigate(this) }
 
-    private fun tryAgain() {
-        viewModel.getExhibitions()
-    }
 }

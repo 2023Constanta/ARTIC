@@ -27,6 +27,11 @@ class ExhibitionDetailsFragment : Fragment(R.layout.fragment_exhibition_details)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.errorPanele.btnTry.setOnClickListener {
+            exhibitionsViewModel.getExhibition(args.exhibitionId)
+        }
+
         exhibitionsViewModel.exhibition.observe(viewLifecycleOwner, ::handleExhibition)
         args.exhibitionId.run {
             exhibitionsViewModel.getExhibition(this)

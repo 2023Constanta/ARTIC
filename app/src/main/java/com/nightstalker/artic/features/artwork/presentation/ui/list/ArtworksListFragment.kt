@@ -60,9 +60,7 @@ class ArtworksListFragment : Fragment(R.layout.fragment_artworks_list) {
         tilSearch.apply {
             editText?.setOnEditorActionListener { _, actionId, _ ->
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    val query = editText?.text.toString()
-
-                    filterArtworksViewModel.setSearchQuery(query)
+                    filterArtworksViewModel.setSearchQuery(editText?.text.toString())
                     filterArtworksViewModel.getReadyQuery()
                     artworksListViewModel.getArtworksByQuery(filterArtworksViewModel.fullQuery.value.toString())
 

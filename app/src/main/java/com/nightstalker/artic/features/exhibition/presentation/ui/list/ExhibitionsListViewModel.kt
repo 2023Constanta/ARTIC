@@ -18,20 +18,20 @@ class ExhibitionsListViewModel(
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    private var _exhibitionsContentState =
+    private var _exhibitions =
         MutableLiveData<ContentResultState>(ContentResultState.Loading)
-    val exhibitionsContentState get() = _exhibitionsContentState
+    val exhibitions get() = _exhibitions
 
     fun getExhibitions() {
         viewModelCall(
             dispatcher = ioDispatcher,
             call = { useCase.getExhibitions() },
-            contentResultState = _exhibitionsContentState
+            contentResultState = _exhibitions
         )
     }
 
     fun loadExhibitions() {
-        if (_exhibitionsContentState.value is ContentResultState.Loading) {
+        if (_exhibitions.value is ContentResultState.Loading) {
             getExhibitions()
         }
     }
